@@ -1,0 +1,2366 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funções Executivas - Curso Completo</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #111827 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: rgba(31, 41, 55, 0.95);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .hidden { display: none !important; }
+
+        /* Navegação */
+        .top-nav {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .top-nav select {
+            width: 100%;
+            padding: 12px;
+            background-color: #1f2937;
+            color: #ffffff;
+            border: 2px solid #374151;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        .top-nav select:focus {
+            outline: none;
+            border-color: #06b6d4;
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #374151;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #06b6d4 0%, #22c55e 100%);
+            transition: width 0.5s ease;
+        }
+        .progress-text {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        /* Typography */
+        h1 {
+            font-size: 2.5rem;
+            color: #06b6d4;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.8rem;
+            color: #06b6d4;
+            margin: 30px 0 15px 0;
+        }
+        h3 {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin: 20px 0 10px 0;
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #d1d5db;
+            margin-bottom: 15px;
+        }
+        
+        /* Cards */
+        .card {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #06b6d4;
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        /* Lists */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        ul li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+        ul li:before {
+            content: "•";
+            position: absolute;
+            left: 10px;
+            color: #06b6d4;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        /* Buttons */
+        button {
+            background-color: #06b6d4;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px 5px;
+            display: inline-block;
+        }
+        button:hover {
+            background-color: #0891b2;
+            transform: scale(1.05);
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        button:disabled {
+            background-color: #374151;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background-color: #4b5563;
+        }
+        .btn-secondary:hover {
+            background-color: #6b7280;
+        }
+
+        .btn-danger {
+            background-color: #991b1b;
+        }
+        .btn-danger:hover {
+            background-color: #b91c1c;
+        }
+
+        .btn-center {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* Botões de Navegação Voltar/Avançar */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            border-top: 1px solid #374151;
+            padding-top: 20px;
+        }
+        .navigation-buttons button {
+            margin: 0;
+        }
+        
+        /* Quiz */
+        .quiz-container {
+            background-color: #1f2937;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        
+        .quiz-question {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        .quiz-option {
+            background-color: #374151;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 12px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            text-align: left;
+        }
+        
+        .quiz-option:hover {
+            background-color: #4b5563;
+            border-color: #06b6d4;
+            transform: translateX(5px);
+        }
+        
+        .quiz-option.correct {
+            background-color: #065f46;
+            border-color: #22c55e;
+        }
+        
+        .quiz-option.incorrect {
+            background-color: #7f1d1d;
+            border-color: #ef4444;
+        }
+        
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .quiz-feedback {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .quiz-feedback.correct {
+            background-color: #065f46;
+            border-left: 4px solid #22c55e;
+        }
+        
+        .quiz-feedback.incorrect {
+            background-color: #7f1d1d;
+            border-left: 4px solid #ef4444;
+        }
+        
+        .quiz-feedback h4 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .quiz-score {
+            text-align: center;
+            font-size: 2rem;
+            color: #fbbf24;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+        
+        /* Version Selection */
+        .version-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .version-card {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid #374151;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .version-card:hover {
+            border-color: #06b6d4;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+        }
+        
+        .version-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .badge-quick {
+            background-color: #22c55e;
+            color: #111827;
+        }
+        
+        .badge-scientific {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+        
+        /* Experiment */
+        /* Novo: Viewport para estabilizar o layout do teste */
+        #experiment-viewport {
+            min-height: 300px; /* Altura suficiente para o estímulo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            margin: 20px 0;
+        }
+
+        #stimulus-element {
+            font-size: 150px;
+            font-weight: bold;
+            /* margin: 50px 0; */ /* Removido */
+            min-height: 200px; /* Mantido para alinhamento interno */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cue-magnitude { color: #3b82f6; }
+        .cue-parity { color: #ef4444; }
+        
+        #feedback-element {
+            font-size: 2.5rem;
+            font-weight: bold;
+            /* margin: 30px 0; */ /* Removido */
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feedback-correct { color: #22c55e; }
+        .feedback-incorrect { color: #ef4444; }
+        
+        #fixation-point {
+            font-size: 4rem;
+            color: #ffffff;
+            /* margin: 50px 0; */ /* Removido */
+        }
+
+        #inter-block-prompt {
+            text-align: center;
+            padding: 50px;
+            background-color: #111827;
+            border-radius: 12px;
+            margin: 40px 0;
+        }
+        #inter-block-prompt h2 {
+            color: #06b6d4;
+        }
+        #inter-block-prompt p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+        
+        /* Charts */
+        .chart-container {
+            background-color: #1f2937;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        /* Results */
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .result-item {
+            text-align: center;
+            padding: 20px;
+            background-color: #111827;
+            border-radius: 8px;
+        }
+        
+        .result-label {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        
+        /* Article Link */
+        .article-link {
+            background-color: #1f2937;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #06b6d4;
+        }
+        
+        .article-link a {
+            color: #22c55e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .article-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Statistical Analysis (do arquivo antigo) */
+        .stat-box {
+            background-color: #111827;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #06b6d4;
+            text-align: left;
+        }
+        .stat-box h4 {
+            color: #06b6d4;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .stat-box p {
+            color: #d1d5db;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 5px;
+        }
+        .stat-highlight {
+            color: #fbbf24;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .interpretation {
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: left;
+        }
+        .interpretation-good {
+            background-color: #064e3b;
+            color: #a7f3d0;
+        }
+        .interpretation-neutral {
+            background-color: #78350f;
+            color: #fde68a;
+        }
+        
+        @media (max-width: 768px) {
+            .version-grid, .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 2rem; }
+            .container { padding: 20px; }
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .navigation-buttons button {
+                width: 100%;
+                font-size: 1rem;
+                padding: 12px 20px;
+            }
+            .navigation-buttons div {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Navegação Superior -->
+    <nav class="top-nav">
+        <select id="nav-menu" onchange="handleNavigation(this.value)">
+            <option value="section-1">Seção 1: O que são FEs?</option>
+            <option value="quiz-1">Quiz 1</option>
+            <option value="section-2">Seção 2: Processos Principais</option>
+            <option value="quiz-2">Quiz 2</option>
+            <option value="section-3">Seção 3: Vias Neurais</option>
+            <option value="quiz-3">Quiz 3</option>
+            <option value="section-4">Seção 4: Estudo fMRI</option>
+            <option value="quiz-4">Quiz 4</option>
+            <option value="section-5">Seção 5: Escolha do Teste</option>
+            <option value="section-6">Seção 6: Instruções do Teste</option>
+            <option value="section-7">Seção 7: Experimento</option>
+            <option value="section-8">Seção 8: Resultados</option>
+            <option value="section-9">Seção 9: Quiz Final</option>
+        </select>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="progress-text" id="progress-text">Etapa 1 de 9</div>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 11%"></div>
+    </div>
+
+    <!-- SEÇÃO 1 -->
+    <div id="section-1" class="section">
+        <h1>🧠 O que são Funções Executivas?</h1>
+        <p style="text-align: center; color: #9ca3af; font-size: 1.2rem; margin-bottom: 30px;">O "Coringa" do Cérebro</p>
+        
+        <p>As <strong>Funções Executivas (FEs)</strong> não são uma habilidade cognitiva única, mas sim um conjunto de processos mentais de alto nível que atuam como o <strong>"gerente" ou "CEO" do cérebro</strong>. Elas são responsáveis por gerenciar e regular outras habilidades mais básicas, como a memória, a percepção e a linguagem.</p>
+        
+        <h2>🃏 A Alegoria dos "4 Ases e 1 Coringa"</h2>
+        
+        <div class="card">
+            <div class="card-icon">🂡 🂱 🃁 🃑</div>
+            <h3>Os "4 Ases" (Cognição Categórica)</h3>
+            <p>São nossas habilidades cognitivas fundamentais:</p>
+            <ul>
+                <li><strong>Percepção:</strong> Como captamos informações do mundo</li>
+                <li><strong>Linguagem:</strong> Como nos comunicamos</li>
+                <li><strong>Memória:</strong> Como armazenamos informações</li>
+                <li><strong>Práxis:</strong> Como executamos ações motoras</li>
+            </ul>
+        </div>
+        
+        <div class="card" style="border-left-color: #fbbf24;">
+            <div class="card-icon">🃏</div>
+            <h3>O "Coringa" (Funções Executivas)</h3>
+            <p>Sozinhos, os "ases" são apenas conhecimento estático. O <strong>"Coringa"</strong> é a FE que nos permite usar e aplicar esses ases de forma <strong>flexível</strong> para atingir objetivos no mundo real.</p>
+        </div>
+        
+        <div class="card" style="background-color: #111827; border-left-color: #22c55e;">
+            <h3>💡 Em resumo:</h3>
+            <p style="font-size: 1.2rem; color: #22c55e; font-weight: bold;">Não basta ter memória; a Função Executiva é o que nos permite usar essa memória para planejar o futuro, resolver um problema ou adaptar nosso comportamento!</p>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button class="btn-secondary" disabled style="opacity: 0;">← Voltar</button>
+            <button onclick="navigateTo('quiz-1')">Fazer Quiz da Seção 1 →</button>
+        </div>
+    </div>
+
+    <!-- QUIZ 1 -->
+    <div id="quiz-1" class="section hidden">
+        <h1>📝 Quiz: Seção 1</h1>
+        <div class="quiz-container">
+            <div class="quiz-question" id="q1-question">O que melhor descreve as Funções Executivas?</div>
+            <div class="quiz-option" onclick="answerQuiz(1, 0)">a) Uma única habilidade cognitiva</div>
+            <div class="quiz-option" onclick="answerQuiz(1, 1)">b) O "gerente" que coordena outras habilidades</div>
+            <div class="quiz-option" onclick="answerQuiz(1, 2)">c) Apenas a memória</div>
+            <div class="quiz-option" onclick="answerQuiz(1, 3)">d) Reflexos automáticos</div>
+            <div id="q1-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question" id="q2-question">Na alegoria dos "4 Ases e 1 Coringa", o que representa o Coringa?</div>
+            <div class="quiz-option" onclick="answerQuiz(2, 0)">a) Percepção</div>
+            <div class="quiz-option" onclick="answerQuiz(2, 1)">b) Memória</div>
+            <div class="quiz-option" onclick="answerQuiz(2, 2)">c) Funções Executivas</div>
+            <div class="quiz-option" onclick="answerQuiz(2, 3)">d) Linguagem</div>
+            <div id="q2-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question" id="q3-question">Por que ter conhecimento ("ases") não é suficiente?</div>
+            <div class="quiz-option" onclick="answerQuiz(3, 0)">a) Precisa das FEs para aplicá-lo de forma flexível</div>
+            <div class="quiz-option" onclick="answerQuiz(3, 1)">b) O conhecimento é mais importante</div>
+            <div class="quiz-option" onclick="answerQuiz(3, 2)">c) Os ases funcionam sozinhos</div>
+            <div class="quiz-option" onclick="answerQuiz(3, 3)">d) Não precisamos de flexibilidade</div>
+            <div id="q3-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('section-1')">← Voltar</button>
+            <button id="quiz1-continue" class="hidden" onclick="navigateTo('section-2')">Continuar para Seção 2 →</button>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 2 -->
+    <div id="section-2" class="section hidden">
+        <h1>⚙️ Os Processos Principais</h1>
+        <p style="text-align: center; color: #9ca3af; font-size: 1.2rem; margin-bottom: 30px;">Flexibilidade, Inibição e Planejamento</p>
+        
+        <p>As Funções Executivas são compostas por três processos centrais que trabalham em conjunto:</p>
+        
+        <div class="card" style="border-left-color: #3b82f6;">
+            <div class="card-icon">🔄</div>
+            <h3 style="color: #3b82f6;">1. Flexibilidade Cognitiva</h3>
+            <p style="font-style: italic; color: #9ca3af;">A "Mudança de Marcha"</p>
+            <p>É a capacidade de <strong>alternar</strong> entre diferentes tarefas, regras ou perspectivas de forma fluida. É como mudar de marcha em um carro conforme a situação exige.</p>
+            <p><strong>Exemplo:</strong> Quando você está lendo este texto e alguém chama seu nome, você precisa interromper a leitura e mudar sua atenção para a pessoa.</p>
+            <p style="margin-top: 15px; padding: 15px; background-color: #111827; border-radius: 8px;">💡 <strong>Descoberta importante:</strong> O cérebro pode aprender a <strong>esperar mudanças</strong>. Se você sabe que vai precisar trocar de tarefa com frequência, seu cérebro se prepara antecipadamente!</p>
+        </div>
+        
+        <div class="card" style="border-left-color: #ef4444;">
+            <div class="card-icon">🛑</div>
+            <h3 style="color: #ef4444;">2. Inibição</h3>
+            <p style="font-style: italic; color: #9ca3af;">O "Freio"</p>
+            <p>É a capacidade de <strong>controlar impulsos</strong>, suprimir respostas automáticas e ignorar distrações. Funciona como um freio mental.</p>
+            <p><strong>Exemplo:</strong> No teste de Stroop, você vê a palavra "AZUL" escrita em tinta vermelha. Seu impulso é ler "azul", mas você precisa inibir isso e dizer a cor da tinta: "vermelho".</p>
+        </div>
+        
+        <div class="card" style="border-left-color: #22c55e;">
+            <div class="card-icon">🏗️</div>
+            <h3 style="color: #22c55e;">3. Planejamento</h3>
+            <p style="font-style: italic; color: #9ca3af;">O "Arquiteto"</p>
+            <p>É a capacidade de <strong>formular e organizar planos</strong> para alcançar objetivos futuros. Como um arquiteto que projeta uma construção antes de começar.</p>
+            <p><strong>Exemplo:</strong> Na Torre de Londres, você precisa reorganizar discos coloridos em pinos seguindo regras específicas, planejando cada movimento com antecedência.</p>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('quiz-1')">← Voltar</button>
+            <button onclick="navigateTo('quiz-2')">Fazer Quiz da Seção 2 →</button>
+        </div>
+    </div>
+
+    <!-- QUIZ 2 -->
+    <div id="quiz-2" class="section hidden">
+        <h1>📝 Quiz: Seção 2</h1>
+        <div class="quiz-container">
+            <div class="quiz-question">Qual processo permite alternar entre diferentes tarefas?</div>
+            <div class="quiz-option" onclick="answerQuiz(4, 0)">a) Planejamento</div>
+            <div class="quiz-option" onclick="answerQuiz(4, 1)">b) Flexibilidade Cognitiva</div>
+            <div class="quiz-option" onclick="answerQuiz(4, 2)">c) Inibição</div>
+            <div class="quiz-option" onclick="answerQuiz(4, 3)">d) Memória</div>
+            <div id="q4-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question">O Teste de Stroop mede qual processo?</div>
+            <div class="quiz-option" onclick="answerQuiz(5, 0)">a) Planejamento</div>
+            <div class="quiz-option" onclick="answerQuiz(5, 1)">b) Flexibilidade</div>
+            <div class="quiz-option" onclick="answerQuiz(5, 2)">c) Inibição</div>
+            <div class="quiz-option" onclick="answerQuiz(5, 3)">d) Percepção</div>
+            <div id="q5-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question">Qual processo é conhecido como o "Arquiteto"?</div>
+            <div class="quiz-option" onclick="answerQuiz(6, 0)">a) Inibição</div>
+            <div class="quiz-option" onclick="answerQuiz(6, 1)">b) Flexibilidade</div>
+            <div class="quiz-option" onclick="answerQuiz(6, 2)">c) Planejamento</div>
+            <div class="quiz-option" onclick="answerQuiz(6, 3)">d) Memória operacional</div>
+            <div id="q6-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('section-2')">← Voltar</button>
+            <button id="quiz2-continue" class="hidden" onclick="navigateTo('section-3')">Continuar para Seção 3 →</button>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 3 -->
+    <div id="section-3" class="section hidden">
+        <h1>🗺️ Onde as Funções Executivas Acontecem?</h1>
+        <p style="text-align: center; color: #9ca3af; font-size: 1.2rem; margin-bottom: 30px;">As Vias Neurais</p>
+        
+        <h2>🧠 Parte 1: Além dos Lobos Frontais</h2>
+        
+        <p>Historicamente, as Funções Executivas foram associadas apenas aos <strong>lobos frontais</strong> do cérebro. O famoso caso de <strong>Phineas Gage</strong> (1848), que sofreu uma lesão frontal e mudou radicalmente de personalidade e comportamento, reforçou essa ideia.</p>
+        
+        <div class="card">
+            <p style="font-size: 1.1rem; line-height: 1.8;">Hoje sabemos que as FEs dependem de <strong>redes executivas distribuídas</strong> que incluem não só regiões frontais, mas também áreas <strong>temporais</strong> e <strong>parietais</strong>. É um trabalho em equipe!</p>
+        </div>
+        
+        <h2>🔄 Parte 2: As Alças CSTC</h2>
+        
+        <p>As Funções Executivas dependem de circuitos chamados <strong>alças córtico-estriado-tálamo-corticais (CSTC)</strong>:</p>
+        
+        <div class="card" style="background-color: #111827; padding: 30px; margin: 20px 0;">
+            <h3 style="text-align: center; color: #06b6d4; margin-bottom: 20px;">Fluxo das Alças CSTC</h3>
+            <p style="text-align: center; font-size: 1.3rem; line-height: 2;">
+                <strong style="color: #3b82f6;">Córtex</strong> → 
+                <strong style="color: #22c55e;">Núcleos da Base (Estriado)</strong> → 
+                <strong style="color: #fbbf24;">Tálamo</strong> → 
+                <strong style="color: #3b82f6;">Córtex</strong>
+            </p>
+        </div>
+        
+        <p>Existem duas alças principais para as Funções Executivas:</p>
+        
+        <div class="card" style="border-left-color: #3b82f6;">
+            <h3 style="color: #3b82f6;">❄️ Alça Dorsolateral</h3>
+            <p style="font-style: italic; color: #9ca3af;">Cognição "Fria"</p>
+            <p>Responsável por processos cognitivos lógicos e não-emocionais:</p>
+            <ul>
+                <li>Planejamento racional</li>
+                <li>Flexibilidade cognitiva</li>
+                <li>Memória de trabalho</li>
+                <li>Tomada de decisão baseada em lógica</li>
+            </ul>
+        </div>
+        
+        <div class="card" style="border-left-color: #ef4444;">
+            <h3 style="color: #ef4444;">🔥 Alça Orbital-Ventromedial</h3>
+            <p style="font-style: italic; color: #9ca3af;">Cognição "Quente"</p>
+            <p>Responsável por processos com carga emocional e social:</p>
+            <ul>
+                <li>Regulação emocional</li>
+                <li>Tomada de decisão social</li>
+                <li>Controle de impulsos emocionais</li>
+                <li>Julgamento moral</li>
+            </ul>
+        </div>
+        
+        <h2>🔗 Parte 3: Rede Fronto-Parietal</h2>
+        
+        <p>Para a <strong>flexibilidade cognitiva</strong> especificamente, a rede mais importante é a <strong>Rede Fronto-Parietal</strong>:</p>
+        
+        <div class="card" style="border-left-color: #06b6d4;">
+            <h3>🌐 Rede Fronto-Parietal</h3>
+            <p>Conecta o <strong>córtex frontal lateral</strong> com o <strong>córtex parietal</strong>. Esta rede forma um sistema robusto para:</p>
+            <ul>
+                <li>Monitorar o ambiente em busca de mudanças</li>
+                <li>Adaptar o comportamento conforme necessário</li>
+                <li>Alternar entre diferentes conjuntos de tarefas</li>
+                <li>Aprender padrões de quando mudanças ocorrem</li>
+            </ul>
+            <p style="margin-top: 15px; padding: 15px; background-color: #1f2937; border-radius: 8px;">💡 Esta rede será o foco do estudo de fMRI que veremos na próxima seção!</p>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('quiz-2')">← Voltar</button>
+            <button onclick="navigateTo('quiz-3')">Fazer Quiz da Seção 3 →</button>
+        </div>
+    </div>
+
+    <!-- QUIZ 3 -->
+    <div id="quiz-3" class="section hidden">
+        <h1>📝 Quiz: Seção 3</h1>
+        <div class="quiz-container">
+            <div class="quiz-question">As Funções Executivas ocorrem apenas nos lobos frontais?</div>
+            <div class="quiz-option" onclick="answerQuiz(7, 0)">a) Sim, exclusivamente</div>
+            <div class="quiz-option" onclick="answerQuiz(7, 1)">b) Não, dependem de redes distribuídas</div>
+            <div class="quiz-option" onclick="answerQuiz(7, 2)">c) Só no tálamo</div>
+            <div class="quiz-option" onclick="answerQuiz(7, 3)">d) Só nos núcleos da base</div>
+            <div id="q7-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question">Qual alça CSTC é responsável pela cognição "fria" (planejamento lógico)?</div>
+            <div class="quiz-option" onclick="answerQuiz(8, 0)">a) Orbital-Ventromedial</div>
+            <div class="quiz-option" onclick="answerQuiz(8, 1)">b) Dorsolateral</div>
+            <div class="quiz-option" onclick="answerQuiz(8, 2)">c) Temporal</div>
+            <div class="quiz-option" onclick="answerQuiz(8, 3)">d) Occipital</div>
+            <div id="q8-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question">Qual rede é especialmente importante para flexibilidade cognitiva?</div>
+            <div class="quiz-option" onclick="answerQuiz(9, 0)">a) Rede límbica</div>
+            <div class="quiz-option" onclick="answerQuiz(9, 1)">b) Rede visual</div>
+            <div class="quiz-option" onclick="answerQuiz(9, 2)">c) Rede Fronto-Parietal</div>
+            <div class="quiz-option" onclick="answerQuiz(9, 3)">d) Rede auditiva</div>
+            <div id="q9-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('section-3')">← Voltar</button>
+            <button id="quiz3-continue" class="hidden" onclick="navigateTo('section-4')">Continuar para Seção 4 →</button>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 4 -->
+    <div id="section-4" class="section hidden">
+        <h1>🔬 Ilustrando a Flexibilidade na Prática</h1>
+        <p style="text-align: center; color: #9ca3af; font-size: 1.2rem; margin-bottom: 30px;">Estudo Moderno de fMRI</p>
+        
+        <div class="article-link">
+            <p style="color: #06b6d4; font-weight: bold; margin-bottom: 10px;">📚 Artigo Científico Original</p>
+            <p style="margin-bottom: 10px;">Sali, A. W., Bejjani, C., & Egner, T. (2024). Learning Cognitive Flexibility: Neural Substrates of Adapting Switch-Readiness to Time-Varying Demands. <em>Journal of Cognitive Neuroscience</em>.</p>
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10902878/" target="_blank">🔗 Leia o artigo completo aqui →</a>
+        </div>
+        
+        <h2>🎯 Introdução ao Estudo</h2>
+        
+        <p>Um estudo recente (2024) usou <strong>ressonância magnética funcional (fMRI)</strong> para investigar como o cérebro ajusta a <strong>"prontidão para mudança"</strong> (switch-readiness) de acordo com a frequência de trocas de tarefa.</p>
+        
+        <h2>🧪 Como Funcionou o Experimento</h2>
+        
+        <div class="card">
+            <h3>Tarefa de Classificação</h3>
+            <p>Os participantes viam números e tinham que julgá-los de duas formas diferentes:</p>
+            <ul>
+                <li><strong style="color: #3b82f6;">AZUL:</strong> Julgar por <strong>magnitude</strong> (menor ou maior que 5)</li>
+                <li><strong style="color: #ef4444;">VERMELHO:</strong> Julgar por <strong>paridade</strong> (ímpar ou par)</li>
+            </ul>
+            <p style="margin-top: 15px;">A cor do número indicava qual tarefa executar. Às vezes a tarefa se repetia, às vezes mudava!</p>
+        </div>
+        
+        <div class="card" style="border-left-color: #fbbf24;">
+            <h3>📊 Manipulação Experimental</h3>
+            <p>O experimento tinha <strong>três blocos</strong> com diferentes frequências de mudança:</p>
+            <ul>
+                <li><strong>25%:</strong> Mudanças eram raras (maioria repetições)</li>
+                <li><strong>50%:</strong> Mudanças e repetições eram equilibradas</li>
+                <li><strong>75%:</strong> Mudanças eram frequentes</li>
+            </ul>
+        </div>
+        
+        <h2>🎨 O que se Observou</h2>
+        
+        <div class="card" style="background-color: #111827; border-left-color: #22c55e;">
+            <h3 style="color: #22c55e;">🧠 O Cérebro Aprende!</h3>
+            <p style="font-size: 1.2rem; line-height: 1.8;">Quando as mudanças eram <strong>frequentes</strong> (75%), os participantes ficavam <strong>"prontos para mudar"</strong>. Os custos de troca (o tempo extra necessário para trocar de tarefa) <strong>diminuíam</strong>!</p>
+            <p style="margin-top: 15px;">Quando mudanças eram raras (25%), o cérebro "relaxava" e mantinha o foco na tarefa atual.</p>
+            <p style="margin-top: 15px; font-weight: bold; color: #22c55e;">💡 Conclusão: O cérebro aprende "o quão flexível precisa ser" baseado no contexto!</p>
+        </div>
+        
+        <h2>🔍 Conexão Neural (fMRI Revelou)</h2>
+        
+        <p>A neuroimagem mostrou que a <strong>Rede Fronto-Parietal</strong> estava em ação:</p>
+        
+        <div class="card" style="border-left-color: #3b82f6;">
+            <div class="card-icon">👁️</div>
+            <h3>Córtex Parietal (IPS - Sulco Intraparietal)</h3>
+            <ul>
+                <li>Detectava quando ocorria uma "surpresa" (Erro de Predição)</li>
+                <li>Quando o cérebro esperava repetição mas houve troca, o IPS "acendia"</li>
+                <li>Sinal: "Ei, ajuste suas expectativas!"</li>
+            </ul>
+        </div>
+        
+        <div class="card" style="border-left-color: #ef4444;">
+            <div class="card-icon">🛑</div>
+            <h3>Córtex Frontal Lateral</h3>
+            <ul>
+                <li>Coordenava a troca entre tarefas</li>
+                <li>Inibia a regra antiga e ativava a nova</li>
+                <li>Trabalhava junto com o IPS para adaptar comportamento</li>
+            </ul>
+        </div>
+        
+        <div class="card" style="background-color: #111827; border-left-color: #06b6d4;">
+            <h3 style="color: #06b6d4;">🌐 Conclusão do Estudo</h3>
+            <p style="font-size: 1.1rem; line-height: 1.8;">"Este estudo mostra que <strong>Flexibilidade Cognitiva</strong> não é estática - é um <strong>processo dinâmico de aprendizagem</strong> mediado pela <strong>rede fronto-parietal</strong>. Nosso cérebro constantemente atualiza suas expectativas sobre quando mudanças vão ocorrer!"</p>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('quiz-3')">← Voltar</button>
+            <button onclick="navigateTo('quiz-4')">Fazer Quiz da Seção 4 →</button>
+        </div>
+    </div>
+
+    <!-- QUIZ 4 -->
+    <div id="quiz-4" class="section hidden">
+        <h1>📝 Quiz: Seção 4</h1>
+        <div class="quiz-container">
+            <div class="quiz-question">O que o estudo de fMRI (Sali et al., 2024) investigou?</div>
+            <div class="quiz-option" onclick="answerQuiz(10, 0)">a) Memória de longo prazo</div>
+            <div class="quiz-option" onclick="answerQuiz(10, 1)">b) Como o cérebro ajusta prontidão para mudança</div>
+            <div class="quiz-option" onclick="answerQuiz(10, 2)">c) Linguagem</div>
+            <div class="quiz-option" onclick="answerQuiz(10, 3)">d) Percepção visual</div>
+            <div id="q10-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question">O que acontecia quando as mudanças eram frequentes (75%)?</div>
+            <div class="quiz-option" onclick="answerQuiz(11, 0)">a) As pessoas ficavam mais lentas</div>
+            <div class="quiz-option" onclick="answerQuiz(11, 1)">b) O custo de troca diminuía</div>
+            <div class="quiz-option" onclick="answerQuiz(11, 2)">c) Não mudava nada</div>
+            <div class="quiz-option" onclick="answerQuiz(11, 3)">d) As pessoas erravam mais</div>
+            <div id="q11-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question">Qual região cerebral aumentou atividade ao detectar "surpresas"?</div>
+            <div class="quiz-option" onclick="answerQuiz(12, 0)">a) Hipocampo</div>
+            <div class="quiz-option" onclick="answerQuiz(12, 1)">b) Amígdala</div>
+            <div class="quiz-option" onclick="answerQuiz(12, 2)">c) Sulco Intraparietal (IPS)</div>
+            <div class="quiz-option" onclick="answerQuiz(12, 3)">d) Cerebelo</div>
+            <div id="q12-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('section-4')">← Voltar</button>
+            <button id="quiz4-continue" class="hidden" onclick="navigateTo('section-5')">Agora vamos experimentar na prática! →</button>
+        </div>
+    </div>
+
+    <!-- ESCOLHA DE VERSÃO -->
+    <div id="section-5" class="section hidden">
+        <h1>🎮 Agora é sua vez!</h1>
+        <p style="text-align: center; font-size: 1.2rem; line-height: 1.8; margin: 30px 0;">Você acabou de aprender sobre flexibilidade cognitiva e como o cérebro se adapta. Agora vamos experimentar na prática o <strong>mesmo teste usado no estudo de fMRI</strong>!</p>
+        
+        <p style="text-align: center; color: #9ca3af; margin-bottom: 30px;">Escolha uma versão:</p>
+        
+        <div class="version-grid">
+            <div class="version-card" onclick="selectTestVersion('quick')">
+                <div class="version-badge badge-quick">VERSÃO DEMONSTRATIVA</div>
+                <h3 style="margin: 20px 0;">Teste Rápido</h3>
+                <ul style="text-align: left;">
+                    <li>20 tentativas por bloco</li>
+                    <li id="quick-version-duration">Duração: ~X-Y minutos</li>
+                    <li>Ideal para experimentar</li>
+                    <li>Visualização de resultados</li>
+                </ul>
+                <button class="version-btn" style="width: 100%; margin-top: 20px;">Começar Versão Rápida</button>
+            </div>
+            
+            <div class="version-card" onclick="selectTestVersion('scientific')">
+                <div class="version-badge badge-scientific">VERSÃO CIENTÍFICA</div>
+                <h3 style="margin: 20px 0;">Teste Completo</h3>
+                <ul style="text-align: left;">
+                    <li>49 tentativas por bloco (protocolo original)</li>
+                    <li id="scientific-version-duration">Duração: ~X-Y minutos</li>
+                    <li>Análise estatística completa</li>
+                    <li>Trimming de outliers</li>
+                </ul>
+                <button class="version-btn" style="width: 100%; background-color: #3b82f6; margin-top: 20px;">Começar Versão Científica</button>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('quiz-4')">← Voltar</button>
+            <span style="flex-grow: 1;"></span> <!-- Spacer -->
+        </div>
+    </div>
+
+    <!-- INSTRUÇÕES DO TESTE -->
+    <div id="section-6" class="section hidden">
+        <h1>📋 Instruções do Teste</h1>
+        
+        <div class="card">
+            <h3>Como Funciona:</h3>
+            <ul>
+                <li>Você verá um <strong>número colorido</strong> na tela</li>
+                <li>A <strong>COR</strong> indica qual tarefa realizar</li>
+            </ul>
+        </div>
+        
+        <div class="card" style="border-left-color: #3b82f6;">
+            <h3 style="color: #3b82f6;">🔵 AZUL = Tarefa de MAGNITUDE</h3>
+            <p>O número é <strong>menor</strong> ou <strong>maior</strong> que 5?</p>
+        </div>
+        
+        <div class="card" style="border-left-color: #ef4444;">
+            <h3 style="color: #ef4444;">🔴 VERMELHO = Tarefa de PARIDADE</h3>
+            <p>O número é <strong>ímpar</strong> ou <strong>par</strong>?</p>
+        </div>
+        
+        <div class="card" style="background-color: #111827;">
+            <h3>⌨️ Como Responder:</h3>
+            <ul>
+                <li>Tecla <strong>F</strong> (esquerda): Número <strong>menor que 5</strong> OU <strong>ímpar</strong></li>
+                <li>Tecla <strong>J</strong> (direita): Número <strong>maior que 5</strong> OU <strong>par</strong></li>
+            </ul>
+        </div>
+        
+        <div class="card" style="border-left-color: #fbbf24;">
+            <h3>⚡ Importante:</h3>
+            <ul>
+                <li>O número aparece por apenas <strong>1 segundo</strong></li>
+                <li>Responda o mais <strong>rápido e preciso</strong> possível</li>
+                <li>Primeiro você fará uma <strong>prática com feedback</strong></li>
+                <li>Depois virão os <strong>blocos do teste sem feedback</strong></li>
+            </ul>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('section-5')">← Voltar</button>
+            <div>
+                <button class="btn-secondary" onclick="navigateTo('section-9')">Pular Teste →</button>
+                <button onclick="startExperiment()">Começar Teste →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TELA DO EXPERIMENTO -->
+    <div id="section-7" class="section hidden">
+        <div id="block-indicator" style="text-align: center; color: #9ca3af; font-size: 1.1rem; margin-bottom: 20px;"></div>
+        <div id="practice-counter" class="hidden" style="text-align: center; font-size: 1.5rem; color: #06b6d4; margin-bottom: 20px; font-weight: bold;"></div>
+        
+        <!-- Viewport para estabilizar o layout -->
+        <div id="experiment-viewport">
+            <div id="fixation-point" class="hidden">+</div>
+            <div id="stimulus-element" class="hidden"></div>
+            <div id="feedback-element" class="hidden"></div>
+            <div id="timeout-indicator" style="font-size: 1.5rem; color: #ef4444; margin-top: 20px;"></div>
+        </div>
+        
+        <div id="inter-block-prompt" class="hidden">
+            <h2>Bloco Concluído!</h2>
+            <p>Faça uma pequena pausa. Clique abaixo quando estiver pronto para o próximo bloco.</p>
+            <button id="next-block-btn">Estou Pronto →</button>
+        </div>
+
+        <!-- ############# ALTERAÇÃO SOLICITADA ############# -->
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('section-6')">← Voltar (Instruções)</button>
+            <button class="btn-danger" onclick="skipToResults()">Pular para os Resultados ⏭️</button>
+        </div>
+        <!-- ############# FIM DA ALTERAÇÃO ############# -->
+    </div>
+
+    <!-- RESULTADOS -->
+    <div id="section-8" class="section hidden">
+        <h1>📊 Seus Resultados</h1>
+        
+        <!-- Container para os blocos de resultados (do arquivo v2) -->
+        <div id="results-container"></div>
+        
+        <div class="chart-container">
+            <h3>📈 Tempos de Reação por Tipo de Tentativa</h3>
+            <div class="chart-wrapper">
+                <canvas id="rtChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="charts-grid">
+            <div class="chart-container">
+                <h3>📉 Correlação: Switches vs. Custo</h3>
+                <div class="chart-wrapper" style="height: 350px;">
+                    <canvas id="correlationChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h3>🎯 Acurácia por Bloco</h3>
+                <div class="chart-wrapper" style="height: 350px;">
+                    <canvas id="accuracyChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Container para análise estatística (do arquivo antigo) -->
+        <div id="statistical-analysis"></div>
+        
+        <!-- Container para interpretação neuro (do arquivo v2) -->
+        <h2 style="margin-top: 40px;">🧠 O que aconteceu no seu cérebro?</h2>
+        
+        <p style="font-size: 1.1rem; line-height: 1.8; margin: 20px 0;">Durante o teste, várias regiões da sua <strong>Rede Fronto-Parietal</strong> trabalharam em conjunto:</p>
+        
+        <div class="card" style="border-left-color: #3b82f6;">
+            <div class="card-icon">👁️</div>
+            <h3>Sulco Intraparietal (IPS)</h3>
+            <ul>
+                <li>Detectou quando a cor do número mudava</li>
+                <li>Calculou "erros de predição" (surpresas)</li>
+                <li>Atualizou suas expectativas sobre a frequência de mudanças</li>
+            </ul>
+        </div>
+        
+        <div class="card" style="border-left-color: #ef4444;">
+            <div class="card-icon">🛑</div>
+            <h3>Córtex Frontal Lateral</h3>
+            <ul>
+                <li>Inibiu a resposta da tarefa anterior</li>
+                <li>Ativou a nova regra (magnitude ou paridade)</li>
+                <li>Coordenou a troca entre tarefas</li>
+            </ul>
+        </div>
+        
+        <div class="card" style="border-left-color: #22c55e;">
+            <div class="card-icon">🌐</div>
+            <h3>Rede Fronto-Parietal (Completa)</h3>
+            <ul>
+                <li>Trabalhou como um sistema integrado</li>
+                <li>Aprendeu os padrões ao longo dos blocos</li>
+                <li>Ajustou sua "prontidão para mudar" de acordo com o contexto</li>
+            </ul>
+        </div>
+        
+        <!-- Container para interpretação neuro (do arquivo v2) -->
+        <div id="brain-interpretation"></div>
+        
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('section-7')">← Voltar (Teste)</button>
+            <button onclick="navigateTo('section-9')">Fazer Quiz Final →</button>
+        </div>
+    </div>
+
+    <!-- QUIZ FINAL -->
+    <div id="section-9" class="section hidden">
+        <h1>🎓 Quiz Final</h1>
+        <p style="text-align: center; font-size: 1.1rem; color: #9ca3af; margin-bottom: 30px;">Teste seu conhecimento completo sobre Funções Executivas</p>
+        
+        <div class="quiz-container">
+            <div class="quiz-question">Qual a principal função das Funções Executivas?</div>
+            <div class="quiz-option" onclick="answerQuiz(13, 0)">a) Armazenar memórias</div>
+            <div class="quiz-option" onclick="answerQuiz(13, 1)">b) Gerenciar e coordenar outras habilidades cognitivas</div>
+            <div class="quiz-option" onclick="answerQuiz(13, 2)">c) Processar linguagem</div>
+            <div class="quiz-option" onclick="answerQuiz(13, 3)">d) Controlar movimentos básicos</div>
+            <div id="q13-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question">Qual processo executivo age como "freio mental"?</div>
+            <div class="quiz-option" onclick="answerQuiz(14, 0)">a) Planejamento</div>
+            <div class="quiz-option" onclick="answerQuiz(14, 1)">b) Flexibilidade</div>
+            <div class="quiz-option" onclick="answerQuiz(14, 2)">c) Inibição</div>
+            <div class="quiz-option" onclick="answerQuiz(14, 3)">d) Memória</div>
+            <div id="q14-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question">Qual rede neural é crucial para flexibilidade cognitiva?</div>
+            <div class="quiz-option" onclick="answerQuiz(15, 0)">a) Rede Fronto-Parietal</div>
+            <div class="quiz-option" onclick="answerQuiz(15, 1)">b) Rede Visual</div>
+            <div class="quiz-option" onclick="answerQuiz(15, 2)">c) Rede Auditiva</div>
+            <div class="quiz-option" onclick="answerQuiz(15, 3)">d) Rede Motora</div>
+            <div id="q15-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question">O que o estudo de fMRI demonstrou sobre o cérebro?</div>
+            <div class="quiz-option" onclick="answerQuiz(16, 0)">a) Ele é inflexível</div>
+            <div class="quiz-option" onclick="answerQuiz(16, 1)">b) Ele aprende e ajusta prontidão para mudança</div>
+            <div class="quiz-option" onclick="answerQuiz(16, 2)">c) Só usa lobos frontais</div>
+            <div class="quiz-option" onclick="answerQuiz(16, 3)">d) Não se adapta a padrões</div>
+            <div id="q16-feedback" class="hidden"></div>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question">Durante o teste, o que o IPS fazia ao detectar mudanças?</div>
+            <div class="quiz-option" onclick="answerQuiz(17, 0)">a) Desligava</div>
+            <div class="quiz-option" onclick="answerQuiz(17, 1)">b) Calculava erro de predição e atualizava expectativas</div>
+            <div class="quiz-option" onclick="answerQuiz(17, 2)">c) Apenas registrava cores</div>
+            <div class="quiz-option" onclick="answerQuiz(17, 3)">d) Controlava emoções</div>
+            <div id="q17-feedback" class="hidden"></div>
+        </div>
+        
+        <div id="final-score" class="hidden">
+            <div class="quiz-score"></div>
+            <div class="btn-center">
+                <button onclick="restartCourse()">🔄 Recomeçar Curso</button>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="btn-secondary" onclick="navigateTo('section-8')">← Voltar (Resultados)</button>
+            <span style="flex-grow: 1;"></span> <!-- Spacer -->
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ========================================
+// CONFIGURAÇÃO GLOBAL
+// ========================================
+
+let currentSection = 1;
+let selectedTestVersion = 'quick';
+let TRIALS_PER_BLOCK = 20;
+let USE_POST_ERROR_EXCLUSION = false;
+let USE_RT_TRIMMING = false;
+
+// Quiz tracking
+const quizAnswers = {
+    1: 1, 2: 2, 3: 0,  // Quiz 1
+    4: 1, 5: 2, 6: 2,  // Quiz 2
+    7: 1, 8: 1, 9: 2,  // Quiz 3
+    10: 1, 11: 1, 12: 2,  // Quiz 4
+    13: 1, 14: 2, 15: 0, 16: 1, 17: 1  // Quiz Final
+};
+
+// MODIFICADO: Explicações sem o prefixo "Correto!"
+const quizExplanations = {
+    1: "As FEs atuam como gerente, coordenando e regulando outras habilidades.",
+    2: "O Coringa representa as Funções Executivas na alegoria.",
+    3: "Precisamos das FEs para aplicar conhecimento de forma flexível.",
+    4: "Flexibilidade Cognitiva permite alternar entre tarefas.",
+    5: "O Teste de Stroop mede controle inibitório.",
+    6: "Planejamento é conhecido como o Arquiteto.",
+    7: "As FEs dependem de redes distribuídas (frontais + parietais + temporais).",
+    8: "A alça Dorsolateral é responsável pela cognição 'fria'.",
+    9: "A Rede Fronto-Parietal é crucial para flexibilidade cognitiva.",
+    10: "O estudo investigou como o cérebro ajusta prontidão para mudança.",
+    11: "Com mudanças frequentes, o custo de troca diminuía.",
+    12: "O IPS (Sulco Intraparietal) detectava surpresas e erros de predição.",
+    13: "A principal função é gerenciar e coordenar outras habilidades.",
+    14: "Inibição age como freio mental.",
+    15: "A Rede Fronto-Parietal é crucial para flexibilidade.",
+    16: "O cérebro aprende e se adapta dinamicamente.",
+    17: "O IPS calculava erros de predição e atualizava expectativas."
+};
+
+let quizProgress = {};
+let finalQuizScore = 0;
+
+// Experiment variables
+const STIMULI = [1, 2, 3, 4, 6, 7, 8, 9];
+const TASKS = { MAGNITUDE: 'MAGNITUDE', PARITY: 'PARITY' };
+const KEYS = { LEFT: 'f', RIGHT: 'j' };
+const PRACTICE_CRITERION = 6;
+const STIMULUS_DURATION = 1000;
+const RESPONSE_DEADLINE = 1000;
+const ITI_MIN = 3000;
+const ITI_MAX = 5000;
+const PRACTICE_FEEDBACK_DURATION = 800;
+const INTER_BLOCK_PAUSE = 3; // (Este valor não é mais um countdown, mas é usado no cálculo de tempo)
+
+let currentPhase = 'start';
+let currentTrialState = null;
+let currentBlockIndex = 0;
+let currentTrialIndex = 0;
+let currentTask = '';
+let currentStimulus = 0;
+let correctKey = '';
+let trialStartTime = 0;
+let trialSequence = [];
+let resultsData = [];
+let blockConfigs = [];
+let consecutiveCorrect = 0;
+let lastTrialWasError = false;
+
+let responseDeadlineTimer, itiTimer, feedbackTimer;
+let rtChart, correlationChart, accuracyChart;
+
+// ========================================
+// NAVEGAÇÃO
+// ========================================
+
+function hideAllSections() {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(s => s.classList.add('hidden'));
+}
+
+function updateProgress() {
+    const progress = (currentSection / 9) * 100;
+    document.getElementById('progress-fill').style.width = progress + '%';
+    document.getElementById('progress-text').textContent = `Etapa ${currentSection} de 9`;
+}
+
+function updateProgressById(sectionId) {
+    const sectionMap = {
+        'section-1': 1,
+        'quiz-1': 1,
+        'section-2': 2,
+        'quiz-2': 2,
+        'section-3': 3,
+        'quiz-3': 3,
+        'section-4': 4,
+        'quiz-4': 4,
+        'section-5': 5,
+        'section-6': 6,
+        'section-7': 7,
+        'section-8': 8,
+        'section-9': 9
+    };
+    currentSection = sectionMap[sectionId] || 1;
+    updateProgress();
+}
+
+function navigateTo(sectionId) {
+    hideAllSections();
+    
+    // Limpa timers do experimento se estivermos saindo da seção 7
+    if (currentTrialState !== null && sectionId !== 'section-7') {
+        clearAllTimers();
+        currentTrialState = null; // <--- CORRETO: Limpa o estado ao sair
+        currentPhase = 'start';
+    }
+
+    document.getElementById(sectionId).classList.remove('hidden');
+    updateProgressById(sectionId);
+    
+    // Atualiza o dropdown para refletir a seção atual
+    document.getElementById('nav-menu').value = sectionId;
+    
+    window.scrollTo(0, 0);
+}
+
+function handleNavigation(sectionId) {
+    // Esta função é chamada pelo dropdown
+    navigateTo(sectionId);
+}
+
+// Funções antigas de navegação (agora substituídas por navigateTo)
+function goToSection(sectionNum) {
+    // Esta função era chamada por botões "Continuar"
+    // Agora redirecionamos para navigateTo
+    navigateTo(`section-${sectionNum}`);
+}
+
+function showQuiz(quizStartNum) {
+    // Esta função era chamada por botões "Fazer Quiz"
+    // Mapeamento de quizStartNum para ID do quiz
+    const quizIdMap = {
+        1: 'quiz-1',
+        4: 'quiz-2',
+        7: 'quiz-3',
+        10: 'quiz-4'
+    };
+    const sectionId = quizIdMap[quizStartNum];
+    if (sectionId) {
+        navigateTo(sectionId);
+    } else if (quizStartNum === 13) { // Caso especial do quiz final
+        navigateTo('section-9');
+    }
+}
+// Fim das funções de navegação
+
+function restartCourse() {
+    quizProgress = {};
+    finalQuizScore = 0;
+    currentSection = 1;
+    navigateTo('section-1');
+    // Reseta os quizzes
+    document.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.classList.remove('disabled', 'correct', 'incorrect');
+        opt.style.pointerEvents = 'auto';
+    });
+    document.querySelectorAll('.quiz-feedback').forEach(fb => fb.classList.add('hidden'));
+    document.querySelectorAll('[id$="-continue"]').forEach(btn => btn.classList.add('hidden'));
+    document.getElementById('final-score').classList.add('hidden');
+}
+
+// ========================================
+// QUIZ
+// ========================================
+
+function answerQuiz(questionNum, answerIndex) {
+    const correct = (answerIndex === quizAnswers[questionNum]);
+    const feedbackDiv = document.getElementById(`q${questionNum}-feedback`);
+    
+    // Mark answer
+    const options = feedbackDiv.parentElement.querySelectorAll('.quiz-option');
+    options.forEach((opt, idx) => {
+        opt.classList.add('disabled');
+        opt.style.pointerEvents = 'none';
+        if (idx === quizAnswers[questionNum]) {
+            opt.classList.add('correct');
+        } else if (idx === answerIndex && !correct) {
+            opt.classList.add('incorrect');
+        }
+    });
+    
+    // Show feedback
+    feedbackDiv.classList.remove('hidden');
+    feedbackDiv.className = correct ? 'quiz-feedback correct' : 'quiz-feedback incorrect';
+    
+    // MODIFICADO: Constrói o feedback dinamicamente
+    feedbackDiv.innerHTML = `
+        <h4>${correct ? '✓ Correto!' : '✗ Incorreto'}</h4>
+        <p>${quizExplanations[questionNum]}</p>
+    `;
+    
+    // Track progress
+    if (!quizProgress[questionNum]) {
+        quizProgress[questionNum] = correct;
+        
+        // Check if quiz complete
+        if (questionNum <= 3) {
+            if (quizProgress[1] !== undefined && quizProgress[2] !== undefined && quizProgress[3] !== undefined) {
+                document.getElementById('quiz1-continue').classList.remove('hidden');
+            }
+        } else if (questionNum <= 6) {
+            if (quizProgress[4] !== undefined && quizProgress[5] !== undefined && quizProgress[6] !== undefined) {
+                document.getElementById('quiz2-continue').classList.remove('hidden');
+            }
+        } else if (questionNum <= 9) {
+            if (quizProgress[7] !== undefined && quizProgress[8] !== undefined && quizProgress[9] !== undefined) {
+                document.getElementById('quiz3-continue').classList.remove('hidden');
+            }
+        } else if (questionNum <= 12) {
+            if (quizProgress[10] !== undefined && quizProgress[11] !== undefined && quizProgress[12] !== undefined) {
+                document.getElementById('quiz4-continue').classList.remove('hidden');
+            }
+        } else {
+            // Final quiz
+            if (correct) finalQuizScore++;
+            if (quizProgress[13] !== undefined && quizProgress[14] !== undefined && 
+                quizProgress[15] !== undefined && quizProgress[16] !== undefined && 
+                quizProgress[17] !== undefined) {
+                showFinalScore();
+            }
+        }
+    }
+}
+
+function showFinalScore() {
+    const percentage = (finalQuizScore / 5) * 100;
+    let stars = '';
+    let message = '';
+    
+    if (percentage === 100) {
+        stars = '⭐⭐⭐⭐⭐';
+        message = '🏆 Expert em Funções Executivas!';
+    } else if (percentage >= 80) {
+        stars = '⭐⭐⭐⭐☆';
+        message = '⭐ Excelente domínio!';
+    } else if (percentage >= 60) {
+        stars = '⭐⭐⭐☆☆';
+        message = '✅ Bom conhecimento!';
+    } else {
+        stars = '⭐⭐☆☆☆';
+        message = '📚 Revise o material!';
+    }
+    
+    document.getElementById('final-score').classList.remove('hidden');
+    document.querySelector('.quiz-score').innerHTML = `
+        <h2 style="color: #06b6d4; margin-bottom: 20px;">Resultado Final</h2>
+        <p style="font-size: 2rem; font-weight: bold; color: #ffffff; margin: 20px 0;">
+            ${finalQuizScore}/5 acertos (${percentage.toFixed(0)}%)
+        </p>
+        <p style="font-size: 1.5rem; margin: 20px 0;">${stars}</p>
+        <p style="font-size: 1.2rem; color: #d1d5db; margin: 30px 0;">${message}</p>
+    `;
+}
+
+// ========================================
+// TEST VERSION SELECTION
+// ========================================
+
+function selectTestVersion(version) {
+    selectedTestVersion = version;
+    TRIALS_PER_BLOCK = version === 'quick' ? 20 : 49;
+    USE_POST_ERROR_EXCLUSION = version === 'scientific';
+    USE_RT_TRIMMING = version === 'scientific';
+    
+    navigateTo('section-6');
+}
+
+function updateTestDurations() {
+    const avgTrialTime = ((ITI_MIN + ITI_MAX) / 2 + RESPONSE_DEADLINE) / 1000; // em segundos
+    const interBlockPause = 10; // Estimativa de pausa de 10s por bloco
+    const numBlocks = 3;
+    const practiceEstimate = 120; // 2 min estimativa para prática
+
+    const quickTrials = 20;
+    const sciTrials = 49;
+
+    const quickDuration = (numBlocks * quickTrials * avgTrialTime) + ((numBlocks - 1) * interBlockPause) + practiceEstimate;
+    const sciDuration = (numBlocks * sciTrials * avgTrialTime) + ((numBlocks - 1) * interBlockPause) + practiceEstimate;
+
+    const quickMin = Math.round(quickDuration / 60);
+    const sciMin = Math.round(sciDuration / 60);
+
+    document.getElementById('quick-version-duration').textContent = `Duração: ~${quickMin}-${quickMin + 3} minutos`;
+    document.getElementById('scientific-version-duration').textContent = `Duração: ~${sciMin}-${sciMin + 3} minutos`;
+}
+
+// ========================================
+// FUNÇÕES ESTATÍSTICAS (DO ARQUIVO ANTIGO)
+// ========================================
+
+function getSDCriterion(n) {
+    const criteria = {
+        4: 1.458, 5: 1.68, 6: 1.841, 7: 1.961, 8: 2.05, 9: 2.12,
+        10: 2.173, 11: 2.22, 12: 2.246, 13: 2.274, 14: 2.31,
+        15: 2.326, 20: 2.391, 25: 2.41, 30: 2.4305, 35: 2.45,
+        50: 2.48, 100: 2.5
+    };
+
+    if (n <= 3) return null;
+    if (criteria[n]) return criteria[n];
+
+    const sizes = Object.keys(criteria).map(Number).sort((a, b) => a - b);
+    if (n < sizes[0]) return criteria[sizes[0]];
+    if (n > sizes[sizes.length - 1]) return criteria[sizes[sizes.length - 1]];
+
+    const lower = Math.max(...sizes.filter(s => s <= n));
+    const upper = Math.min(...sizes.filter(s => s >= n));
+
+    if (lower === upper) return criteria[lower];
+
+    const x1 = lower, y1 = criteria[lower];
+    const x2 = upper, y2 = criteria[upper];
+    return y1 + (y2 - y1) * (n - x1) / (x2 - x1);
+}
+
+function modifiedRecursiveTrim(rts) {
+    if (!USE_RT_TRIMMING || rts.length <= 4) return rts;
+
+    let data = [...rts];
+    let trimming = true;
+
+    while (trimming && data.length > 4) {
+        const n = data.length;
+        const sd_criterion = getSDCriterion(n);
+        if (!sd_criterion) break;
+
+        const mean = data.reduce((a, b) => a + b, 0) / data.length;
+        const variance = data.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / data.length;
+        const sd = Math.sqrt(variance);
+
+        const lower_limit = mean - sd_criterion * sd;
+        const upper_limit = mean + sd_criterion * sd;
+
+        const outliers = data.filter(rt => rt < lower_limit || rt > upper_limit);
+
+        if (outliers.length === 0) {
+            trimming = false;
+        } else {
+            // Encontra e remove o maior outlier
+            let maxDistance = -1;
+            let maxIndex = -1;
+            for(let i=0; i < data.length; i++) {
+                const dist = Math.max(lower_limit - data[i], data[i] - upper_limit);
+                if (dist > maxDistance) {
+                    maxDistance = dist;
+                    maxIndex = i;
+                }
+            }
+            if(maxIndex > -1) {
+                data.splice(maxIndex, 1);
+            } else {
+                 trimming = false; // Segurança
+            }
+        }
+    }
+    return data;
+}
+
+function calculatePValue(r, n) {
+    // Cálculo aproximado do p-value para correlação de Pearson
+    // t = r * sqrt(n - 2) / sqrt(1 - r^2)
+    if (n <= 2) return 1.0;
+    // Evita divisão por zero se r for 1 ou -1
+    if (Math.abs(r) === 1) return 0.0; 
+    
+    const t = Math.abs(r) * Math.sqrt(n - 2) / Math.sqrt(1 - r * r);
+
+    // Aproximação do p-value usando distribuição t
+    // Para n=3 (3 blocos), df = 1
+    // Valores críticos: t(0.05, 1) ≈ 12.71, t(0.10, 1) ≈ 6.31
+    if (n === 3) {
+        if (t > 12.71) return 0.01; // (na verdade é 0.05 bilateral, mas vamos simplificar)
+        if (t > 6.31) return 0.05;
+        if (t > 2.92) return 0.10;
+        return 0.20; // > 0.10
+    }
+    // Para n > 3, aproximação mais geral (não vai acontecer aqui, mas é bom ter)
+    const df = n - 2;
+    if (t > 3.182) return 0.01;
+    if (t > 2.306) return 0.05;
+    if (t > 1.886) return 0.10;
+    return 0.20; // > 0.10
+}
+
+
+// ========================================
+// EXPERIMENT FUNCTIONS
+// ========================================
+
+function generateGuaranteedDistribution(totalTrials, targetMagnitudePct, targetSwitchPct) {
+    const MAGNITUDE = 'MAGNITUDE';
+    const PARITY = 'PARITY';
+    
+    const magTarget = Math.round(totalTrials * targetMagnitudePct / 100);
+    const parTarget = totalTrials - magTarget;
+    const switchTarget = Math.round((totalTrials - 1) * targetSwitchPct / 100);
+    const repeatTarget = (totalTrials - 1) - switchTarget;
+    
+    const lastTaskArray = [MAGNITUDE, PARITY];
+    let lastTask = lastTaskArray[Math.floor(Math.random() * lastTaskArray.length)];
+    const sequence = [{ task: lastTask, type: 'first' }];
+    
+    let magRemaining = magTarget - (lastTask === MAGNITUDE ? 1 : 0);
+    let parRemaining = parTarget - (lastTask === PARITY ? 1 : 0);
+    let switchesRemaining = switchTarget;
+    let repeatsRemaining = repeatTarget;
+    
+    for (let trialNum = 2; trialNum <= totalTrials; trialNum++) {
+        let nextTask, trialType;
+        
+        if (switchesRemaining === 0) {
+            nextTask = lastTask;
+            trialType = 'repeat';
+            repeatsRemaining--;
+        } else if (repeatsRemaining === 0) {
+            nextTask = lastTask === MAGNITUDE ? PARITY : MAGNITUDE;
+            trialType = 'switch';
+            switchesRemaining--;
+        } else {
+            const probSwitch = switchesRemaining / (switchesRemaining + repeatsRemaining);
+            if (Math.random() < probSwitch) {
+                nextTask = lastTask === MAGNITUDE ? PARITY : MAGNITUDE;
+                trialType = 'switch';
+                switchesRemaining--;
+            } else {
+                nextTask = lastTask;
+                trialType = 'repeat';
+                repeatsRemaining--;
+            }
+        }
+        
+        if (trialType === 'switch') {
+            nextTask = lastTask === MAGNITUDE ? PARITY : MAGNITUDE;
+        }
+        
+        if (nextTask === MAGNITUDE) {
+            if (magRemaining > 0) {
+                magRemaining--;
+            } else {
+                nextTask = PARITY;
+                parRemaining--;
+            }
+        } else {
+            if (parRemaining > 0) {
+                parRemaining--;
+            } else {
+                nextTask = MAGNITUDE;
+                magRemaining--;
+            }
+        }
+        
+        sequence.push({ task: nextTask, type: trialType });
+        lastTask = nextTask;
+    }
+    
+    return sequence;
+}
+
+function shuffle(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function getRandomItem(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function getPseudoExponentialITI(min, max) {
+    const range = max - min;
+    const exponential = Math.pow(Math.random(), 2);
+    return min + (exponential * range);
+}
+
+function getCorrectKey(task, stimulus) {
+    if (task === TASKS.MAGNITUDE) {
+        return (stimulus < 5) ? KEYS.LEFT : KEYS.RIGHT;
+    } else {
+        return (stimulus % 2 !== 0) ? KEYS.LEFT : KEYS.RIGHT;
+    }
+}
+
+function clearAllTimers() {
+    if (responseDeadlineTimer) clearTimeout(responseDeadlineTimer);
+    if (itiTimer) clearTimeout(itiTimer);
+    if (feedbackTimer) clearTimeout(feedbackTimer);
+}
+
+function startExperiment() {
+    navigateTo('section-7');
+    resultsData = [];
+    
+    const BASE_BLOCK_CONFIGS = [
+        { prob: 0.25, trials: TRIALS_PER_BLOCK, name: "Baixa Frequência (25%)" },
+        { prob: 0.50, trials: TRIALS_PER_BLOCK, name: "Média Frequência (50%)" },
+        { prob: 0.75, trials: TRIALS_PER_BLOCK, name: "Alta Frequência (75%)" }
+    ];
+    
+    blockConfigs = shuffle([...BASE_BLOCK_CONFIGS]);
+    consecutiveCorrect = 0;
+    lastTrialWasError = false;
+    
+    startPractice();
+}
+
+function startPractice() {
+    currentPhase = 'practice';
+    currentTrialIndex = 0;
+    consecutiveCorrect = 0;
+    trialSequence = generateGuaranteedDistribution(100, 50, 50);
+    
+    document.getElementById('practice-counter').classList.remove('hidden');
+    updatePracticeCounter();
+    
+    currentTrialState = 'practice'; // <--- CORREÇÃO: Define o estado inicial para o teste começar
+    setTimeout(() => runTrial(), 500);
+}
+
+function updatePracticeCounter() {
+    document.getElementById('practice-counter').textContent = 
+        `Acertos consecutivos: ${consecutiveCorrect}/${PRACTICE_CRITERION}`;
+}
+
+function runTrial() {
+    if (currentTrialState === null) return; // Proteção para caso o teste seja interrompido
+
+    if (currentPhase === 'practice') {
+        document.getElementById('block-indicator').textContent = 'PRÁTICA';
+    } else if (currentPhase === 'experiment') {
+        if (currentTrialIndex >= TRIALS_PER_BLOCK) {
+            startBlock(currentBlockIndex + 1); // Avança para o próximo bloco
+            return;
+        }
+        document.getElementById('block-indicator').textContent = 
+            `Bloco ${currentBlockIndex + 1} de 3 | Tentativa ${currentTrialIndex + 1} de ${TRIALS_PER_BLOCK}`;
+    }
+    
+    hideExperimentElements();
+    
+    const trial = trialSequence[currentTrialIndex];
+    currentTask = trial.task;
+    currentStimulus = getRandomItem(STIMULI);
+    correctKey = getCorrectKey(currentTask, currentStimulus);
+    
+    const stimulusElement = document.getElementById('stimulus-element');
+    stimulusElement.textContent = currentStimulus;
+    stimulusElement.className = currentTask === TASKS.MAGNITUDE ? 'cue-magnitude' : 'cue-parity';
+    stimulusElement.classList.remove('hidden');
+    
+    currentTrialState = 'awaiting-response';
+    trialStartTime = performance.now();
+    
+    responseDeadlineTimer = setTimeout(handleTimeout, RESPONSE_DEADLINE);
+}
+
+function hideExperimentElements() {
+    document.getElementById('stimulus-element').classList.add('hidden');
+    document.getElementById('fixation-point').classList.add('hidden');
+    document.getElementById('feedback-element').classList.add('hidden');
+    document.getElementById('timeout-indicator').textContent = '';
+    document.getElementById('inter-block-prompt').classList.add('hidden');
+}
+
+function handleTimeout() {
+    if (currentTrialState !== 'awaiting-response') return;
+    
+    document.getElementById('stimulus-element').classList.add('hidden');
+    document.getElementById('timeout-indicator').textContent = "Tempo Esgotado!";
+    
+    if (currentPhase === 'experiment') {
+        resultsData.push({
+            block: currentBlockIndex,
+            blockName: blockConfigs[currentBlockIndex].name, // Adicionado para análise
+            trial: currentTrialIndex,
+            task: currentTask,
+            trialType: trialSequence[currentTrialIndex].type,
+            stimulus: currentStimulus,
+            response: 'timeout',
+            correct: false,
+            rt: RESPONSE_DEADLINE,
+            postError: lastTrialWasError
+        });
+        lastTrialWasError = true;
+        startITI();
+    } else {
+        consecutiveCorrect = 0;
+        updatePracticeCounter();
+        showPracticeFeedback(false);
+    }
+}
+
+function handleKeyPress(e) {
+    if (currentTrialState !== 'awaiting-response') return;
+    
+    const key = e.key.toLowerCase();
+    if (key !== KEYS.LEFT && key !== KEYS.RIGHT) return;
+    
+    clearTimeout(responseDeadlineTimer);
+    document.getElementById('stimulus-element').classList.add('hidden');
+    
+    const rt = performance.now() - trialStartTime;
+    const correct = (key === correctKey);
+    
+    if (currentPhase === 'experiment') {
+        resultsData.push({
+            block: currentBlockIndex,
+            blockName: blockConfigs[currentBlockIndex].name, // Adicionado para análise
+            trial: currentTrialIndex,
+            task: currentTask,
+            trialType: trialSequence[currentTrialIndex].type,
+            stimulus: currentStimulus,
+            response: key,
+            correct: correct,
+            rt: rt,
+            postError: lastTrialWasError
+        });
+        lastTrialWasError = !correct;
+        startITI();
+    } else {
+        if (correct) {
+            consecutiveCorrect++;
+        } else {
+            consecutiveCorrect = 0;
+        }
+        updatePracticeCounter();
+        showPracticeFeedback(correct);
+    }
+}
+
+function showPracticeFeedback(correct) {
+    currentTrialState = 'showing-feedback';
+    hideExperimentElements();
+    document.getElementById('practice-counter').classList.remove('hidden');
+    
+    const feedbackElement = document.getElementById('feedback-element');
+    feedbackElement.textContent = correct ? "Correto ✓" : "Incorreto ✗";
+    feedbackElement.className = correct ? "feedback-correct" : "feedback-incorrect";
+    feedbackElement.classList.remove('hidden');
+    
+    feedbackTimer = setTimeout(() => {
+        if (currentTrialState === null) return; // Teste foi interrompido
+        if (consecutiveCorrect >= PRACTICE_CRITERION) {
+            showPracticeSuccess();
+        } else {
+            startITI();
+        }
+    }, PRACTICE_FEEDBACK_DURATION);
+}
+
+function showPracticeSuccess() {
+    hideExperimentElements();
+    const feedbackElement = document.getElementById('feedback-element');
+    feedbackElement.textContent = "Ótimo! Preparando o primeiro bloco...";
+    feedbackElement.className = "feedback-correct";
+    feedbackElement.classList.remove('hidden');
+    
+    setTimeout(() => {
+        if (currentTrialState === null) return; // Teste foi interrompido
+        startBlock(0); // Inicia o bloco 0 (primeiro bloco)
+    }, 3000);
+}
+
+function setupAndRunBlock(blockIndex) {
+    currentPhase = 'experiment';
+    currentBlockIndex = blockIndex;
+    currentTrialIndex = 0;
+    lastTrialWasError = false;
+    const config = blockConfigs[currentBlockIndex];
+    
+    trialSequence = generateGuaranteedDistribution(
+        config.trials,
+        50,
+        Math.round(config.prob * 100)
+    );
+    
+    currentTrialState = 'experiment'; // <--- CORREÇÃO: Define o estado para o bloco começar
+    runTrial(); // Inicia o primeiro trial do bloco
+}
+
+function startBlock(blockIndex) {
+    if (blockIndex >= blockConfigs.length) {
+        showResults();
+        return;
+    }
+    
+    hideExperimentElements();
+    document.getElementById('practice-counter').classList.add('hidden');
+    
+    if (blockIndex > 0) {
+        // Mostra o prompt para blocos 1 e 2 (depois do 0 e 1)
+        document.getElementById('block-indicator').textContent = "Bloco Concluído";
+        document.getElementById('inter-block-prompt').classList.remove('hidden');
+        document.getElementById('next-block-btn').onclick = () => {
+            if (currentTrialState === null) return; // Teste foi interrompido
+            document.getElementById('inter-block-prompt').classList.add('hidden');
+            setupAndRunBlock(blockIndex);
+        };
+    } else {
+        // blockIndex === 0, apenas roda (chamado pelo showPracticeSuccess)
+        setupAndRunBlock(blockIndex);
+    }
+}
+
+function startITI() {
+    currentTrialState = 'iti';
+    hideExperimentElements();
+    document.getElementById('fixation-point').classList.remove('hidden');
+    
+    currentTrialIndex++;
+    
+    const itiDuration = getPseudoExponentialITI(ITI_MIN, ITI_MAX);
+    itiTimer = setTimeout(runTrial, itiDuration);
+}
+
+// ############# FUNÇÃO ALTERADA #############
+function skipToResults() {
+    // Limpa todos os timers e interrompe o estado do experimento
+    clearAllTimers();
+    currentTrialState = null;
+    currentPhase = 'start';
+    
+    // Chama a função de resultados, que irá calcular com os dados disponíveis
+    // e navegar para a seção 8.
+    showResults();
+}
+// ############# FIM DA ALTERAÇÃO #############
+
+
+function calculateCorrelation(x, y) {
+    const n = x.length;
+    if (n === 0) return 0;
+    const sum_x = x.reduce((a, b) => a + b, 0);
+    const sum_y = y.reduce((a, b) => a + b, 0);
+    const sum_xy = x.reduce((sum, xi, i) => sum + xi * y[i], 0);
+    const sum_x2 = x.reduce((sum, xi) => sum + xi * xi, 0);
+    const sum_y2 = y.reduce((sum, yi) => sum + yi * yi, 0);
+    
+    const numerator = n * sum_xy - sum_x * sum_y;
+    const denominator = Math.sqrt((n * sum_x2 - sum_x * sum_x) * (n * sum_y2 - sum_y * sum_y));
+    
+    return denominator === 0 ? 0 : numerator / denominator;
+}
+
+function showResults() {
+    // Garante que o estado do experimento seja limpo
+    clearAllTimers();
+    currentTrialState = null;
+    currentPhase = 'start';
+
+    navigateTo('section-8');
+    
+    const resultsContainer = document.getElementById('results-container');
+    resultsContainer.innerHTML = '';
+    
+    // <--- CORREÇÃO: Garante que blockConfigs exista, mesmo se o teste for pulado
+    if (blockConfigs.length === 0) {
+         const BASE_BLOCK_CONFIGS = [
+            { prob: 0.25, trials: TRIALS_PER_BLOCK, name: "Baixa Frequência (25%)" },
+            { prob: 0.50, trials: TRIALS_PER_BLOCK, name: "Média Frequência (50%)" },
+            { prob: 0.75, trials: TRIALS_PER_BLOCK, name: "Alta Frequência (75%)" }
+        ];
+        // Não embaralha para manter a ordem se o teste não foi feito
+        blockConfigs = BASE_BLOCK_CONFIGS; 
+    }
+    
+    const blockAnalysis = [];
+    
+    // Se não houver dados (usuário pulou TUDO), mostra uma mensagem
+    if (resultsData.length === 0) {
+        resultsContainer.innerHTML = "<p style='text-align: center; font-size: 1.1rem; color: #fbbf24;'>Nenhum dado do teste foi coletado. Complete o teste (ou parte dele) para ver seus resultados.</p>";
+        // Limpa charts
+        if (rtChart) rtChart.destroy();
+        if (correlationChart) correlationChart.destroy();
+        if (accuracyChart) accuracyChart.destroy();
+    }
+    
+    blockConfigs.forEach((config, index) => {
+        const blockData = resultsData.filter(d => d.block === index);
+        
+        const correct = blockData.filter(d => d.correct).length;
+        const total = blockData.length;
+        const accuracy = total > 0 ? (correct / total * 100).toFixed(1) : 0;
+        
+        let validTrials = blockData.filter(d => 
+            d.correct && 
+            d.trialType !== 'first' && 
+            d.response !== 'timeout'
+        );
+        
+        if (USE_POST_ERROR_EXCLUSION) {
+            validTrials = validTrials.filter(d => !d.postError);
+        }
+        
+        const repeatTrials = validTrials.filter(d => d.trialType === 'repeat');
+        const switchTrials = validTrials.filter(d => d.trialType === 'switch');
+        
+        // Aplica trimming (importado do arquivo antigo)
+        const repeatRTs = repeatTrials.map(t => t.rt);
+        const switchRTs = switchTrials.map(t => t.rt);
+
+        const trimmedRepeatRTs = modifiedRecursiveTrim(repeatRTs);
+        const trimmedSwitchRTs = modifiedRecursiveTrim(switchRTs);
+
+        const avgRepeatRT = trimmedRepeatRTs.length > 0
+            ? trimmedRepeatRTs.reduce((acc, t) => acc + t, 0) / trimmedRepeatRTs.length
+            : 0;
+
+        const avgSwitchRT = trimmedSwitchRTs.length > 0
+            ? trimmedSwitchRTs.reduce((acc, t) => acc + t, 0) / trimmedSwitchRTs.length
+            : 0;
+
+        // Custo de troca é Troca - Repetição
+        const switchCost = (avgRepeatRT > 0 && avgSwitchRT > 0) ? avgSwitchRT - avgRepeatRT : 0;
+        
+        blockAnalysis.push({
+            name: config.name,
+            prob: config.prob * 100,
+            accuracy: parseFloat(accuracy),
+            avgRepeatRT: avgRepeatRT,
+            avgSwitchRT: avgSwitchRT,
+            switchCost: switchCost
+        });
+        
+        // Só mostra o bloco se ele tiver sido iniciado (ou se nenhum dado existir)
+        if (resultsData.length === 0 || total > 0) {
+            resultsContainer.innerHTML += `
+                <div class="card">
+                    <h3>${config.name}</h3>
+                    <div class="result-grid">
+                        <div class="result-item">
+                            <div class="result-label">Precisão</div>
+                            <div class="result-value">${accuracy}%</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Custo de Troca</div>
+                            <div class="result-value">${switchCost.toFixed(0)} ms</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">TR Repetição</div>
+                            <div class="result-value">${avgRepeatRT.toFixed(0)} ms</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">TR Troca</div>
+                            <div class="result-value">${avgSwitchRT.toFixed(0)} ms</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    });
+    
+    // Cria os gráficos (função de correlação foi atualizada)
+    createCharts(blockAnalysis); 
+    // Cria a análise estatística (nova função)
+    createStatisticalAnalysis(blockAnalysis);
+    // Cria a interpretação neuro (função existente)
+    createBrainInterpretation(blockAnalysis);
+}
+
+function createCharts(data) {
+    // Limpa charts antigos se existirem
+    if (rtChart) rtChart.destroy();
+    if (correlationChart) correlationChart.destroy();
+    if (accuracyChart) accuracyChart.destroy();
+
+    // Filtra dados para garantir que apenas blocos com dados sejam plotados
+    const chartData = data.filter(d => d.avgRepeatRT > 0 || d.avgSwitchRT > 0);
+    
+    // Se não houver dados, usa todos os blocos com 0
+    const dataToPlot = chartData.length > 0 ? chartData : data;
+
+    
+    // RT Chart
+    const rtCtx = document.getElementById('rtChart').getContext('2d');
+    rtChart = new Chart(rtCtx, {
+        type: 'bar',
+        data: {
+            labels: dataToPlot.map(d => d.prob + '% Switches'),
+            datasets: [
+                {
+                    label: 'TR Repetição',
+                    data: dataToPlot.map(d => d.avgRepeatRT),
+                    backgroundColor: 'rgba(59, 130, 246, 0.7)'
+                },
+                {
+                    label: 'TR Troca',
+                    data: dataToPlot.map(d => d.avgSwitchRT),
+                    backgroundColor: 'rgba(239, 68, 68, 0.7)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#d1d5db' } }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#9ca3af' },
+                    grid: { color: 'rgba(156, 163, 175, 0.1)' }
+                },
+                x: {
+                    ticks: { color: '#9ca3af' },
+                    grid: { color: 'rgba(156, 163, 175, 0.1)' }
+                }
+            }
+        }
+    });
+    
+    // Correlation Chart (Versão melhorada do arquivo antigo)
+    const x = dataToPlot.map(d => d.prob);
+    const y = dataToPlot.map(d => d.switchCost);
+    
+    let r = 0, pValue = 1.0;
+    if (chartData.length > 1) { // Só calcula correlação se tiver pelo menos 2 pontos de dados reais
+         r = calculateCorrelation(x, y);
+         pValue = calculatePValue(r, x.length);
+    }
+
+    // Linha de regressão
+    let regressionPoints = [];
+    if(chartData.length > 1) {
+        const meanX = x.reduce((a, b) => a + b) / x.length;
+        const meanY = y.reduce((a, b) => a + b) / y.length;
+        const x_minus_meanX = x.map(val => val - meanX);
+        const y_minus_meanY = y.map(val => val - meanY);
+        const xy = x_minus_meanX.map((val, i) => val * y_minus_meanY[i]);
+        const xx = x_minus_meanX.map(val => val * val);
+        const slope = xx.reduce((a,b) => a+b, 0) === 0 ? 0 : xy.reduce((a,b) => a+b, 0) / xx.reduce((a,b) => a+b, 0);
+        const intercept = meanY - slope * meanX;
+
+        regressionPoints = [
+            { x: 25, y: slope * 25 + intercept },
+            { x: 75, y: slope * 75 + intercept }
+        ];
+    }
+    
+    const corrCtx = document.getElementById('correlationChart').getContext('2d');
+    correlationChart = new Chart(corrCtx, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Custo de Troca',
+                data: dataToPlot.map(d => ({ x: d.prob, y: d.switchCost })),
+                backgroundColor: '#ef4444',
+                pointRadius: 8
+            },
+            {
+                label: 'Linha de Tendência',
+                data: regressionPoints,
+                type: 'line',
+                borderColor: '#fbbf24',
+                borderWidth: 3,
+                borderDash: [5, 5],
+                pointRadius: 0,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#d1d5db' } },
+                title: {
+                    display: true,
+                    text: `Correlação: r = ${r.toFixed(3)}, p ${pValue < 0.05 ? '< 0.05' : '≥ 0.05'}`,
+                    color: pValue < 0.05 ? '#22c55e' : '#fbbf24',
+                    font: { size: 16 }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#9ca3af' },
+                    grid: { color: 'rgba(156, 163, 175, 0.1)' },
+                    title: { display: true, text: 'Custo de Troca (ms)', color: '#9ca3af'}
+                },
+                x: {
+                    ticks: { color: '#9ca3af' },
+                    grid: { color: 'rgba(156, 163, 175, 0.1)' },
+                    title: { display: true, text: '% de Mudanças', color: '#9ca3af'}
+                }
+            }
+        }
+    });
+    
+    // Accuracy Chart
+    const accCtx = document.getElementById('accuracyChart').getContext('2d');
+    accuracyChart = new Chart(accCtx, {
+        type: 'doughnut',
+        data: {
+            labels: dataToPlot.map(d => d.prob + '% Bloco'),
+            datasets: [{
+                label: 'Acurácia',
+                data: dataToPlot.map(d => d.accuracy),
+                backgroundColor: [
+                    'rgba(59, 130, 246, 0.7)',
+                    'rgba(6, 182, 212, 0.7)',
+                    'rgba(34, 197, 94, 0.7)'
+                ],
+                borderColor: '#1f2937',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: '#d1d5db' }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.raw.toFixed(1)}%`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// NOVA FUNÇÃO (DO ARQUIVO ANTIGO)
+function createStatisticalAnalysis(data) {
+    // Filtra para garantir que temos dados para calcular
+    const validData = data.filter(d => d.avgRepeatRT > 0 || d.avgSwitchRT > 0);
+    const validX = validData.map(d => d.prob);
+    const validY = validData.map(d => d.switchCost);
+
+    let r = 0, pValue = 1.0;
+    if (validX.length > 1) { // Precisa de pelo menos 2 pontos para correlação
+        r = calculateCorrelation(validX, validY);
+        pValue = calculatePValue(r, validX.length);
+    } else {
+        r = 0;
+        pValue = 1.0;
+    }
+
+
+    let interpretation = '';
+    let interpretationClass = '';
+    let validity = '';
+
+    if (resultsData.length === 0) {
+        interpretation = '<strong>Teste não realizado.</strong> Complete o teste para gerar a análise estatística.';
+        interpretationClass = 'interpretation-neutral';
+        validity = 'N/A';
+    } else if (validX.length < 2) {
+        interpretation = '<strong>Dados insuficientes.</strong> É preciso completar pelo menos dois blocos do teste para calcular a correlação.';
+        interpretationClass = 'interpretation-neutral';
+        validity = 'N/A';
+    } else if (Math.abs(r) > 0.8 && pValue < 0.05) {
+        interpretation = '<strong>Correlação forte e significativa!</strong> Seus resultados demonstram claramente que o aumento na frequência de trocas está associado à diminuição do custo de troca. Isso indica <strong>boa adaptação cognitiva</strong>.';
+        interpretationClass = 'interpretation-good';
+        validity = '✅ Resultado estatisticamente válido';
+    } else if (Math.abs(r) > 0.5 && pValue < 0.10) {
+        interpretation = '<strong>Correlação moderada.</strong> Há evidências de uma tendência de adaptação, mas os resultados não são conclusivos. Isso pode ocorrer por variação individual ou pelo número limitado de blocos.';
+        interpretationClass = 'interpretation-neutral';
+        validity = '⚠️ Resultado sugestivo, mas não conclusivo';
+    } else {
+        interpretation = '<strong>Correlação fraca ou não significativa.</strong> Não há evidências estatísticas suficientes de adaptação nos seus dados. Isso pode ocorrer por: fadiga, ordem dos blocos, variação individual, ou número limitado de tentativas.';
+        interpretationClass = 'interpretation-neutral';
+        validity = '❌ Resultado não atinge significância estatística';
+    }
+
+    const statsHTML = `
+        <h2 style="margin-top: 40px;">📊 Análise Estatística</h2>
+        <div class="stat-box">
+            <h4>Correlação de Pearson</h4>
+            <p>Coeficiente: <span class="stat-highlight">r = ${r.toFixed(3)}</span></p>
+            <p>Valor-p: <span class="stat-highlight">p ${pValue < 0.05 ? '< 0.05' : pValue < 0.10 ? '< 0.10' : '≥ 0.10'}</span></p>
+            <p style="margin-top: 10px; font-size: 0.95rem; color: #9ca3af;">
+                ${Math.abs(r) < 0.3 ? 'Correlação fraca' : Math.abs(r) < 0.7 ? 'Correlação moderada' : 'Correlação forte'} 
+                ${r < 0 ? 'negativa' : 'positiva'} entre probabilidade de troca e custo de troca.
+            </p>
+        </div>
+
+        <div class="stat-box">
+            <h4>Validade Estatística</h4>
+            <p><span class="stat-highlight">${validity}</span></p>
+            <p style="margin-top: 10px; font-size: 0.95rem; color: #9ca3af;">
+                Critério: p < 0.05 para significância estatística em pesquisa científica.
+            </p>
+        </div>
+
+        <div class="interpretation ${interpretationClass}" style="margin-top: 20px;">
+            <p>${interpretation}</p>
+        </div>
+
+        <div class="stat-box" style="margin-top: 20px;">
+            <h4>💡 Interpretação para Leigos</h4>
+            <p>
+                <strong>O que é o custo de troca?</strong><br>
+                É a diferença de tempo entre fazer a mesma tarefa repetidamente versus alternar entre tarefas diferentes. 
+                Quanto menor o custo, melhor você está se adaptando às mudanças.
+            </p>
+            <p style="margin-top: 15px;">
+                <strong>O que significa a correlação?</strong><br>
+                Medimos se há uma relação entre <em>quantas vezes você troca</em> e <em>quão rápido você se adapta</em>. 
+                Uma correlação negativa forte (próxima de -1) indica que quanto mais você pratica trocar, menor o custo - sinal de boa adaptação cerebral!
+            </p>
+            <p style="margin-top: 15px;">
+                <strong>O que é o valor-p?</strong><br>
+                É a probabilidade de os resultados seriam devidos ao acaso. Valores abaixo de 0.05 (5%) são considerados 
+                estatisticamente significativos - ou seja, provavelmente não são coincidência!
+            </p>
+        </div>
+    `;
+
+    document.getElementById('statistical-analysis').innerHTML = statsHTML;
+}
+
+// FUNÇÃO EXISTENTE (SEM MODIFICAÇÕES)
+function createBrainInterpretation(data) {
+    
+    const validData = data.filter(d => d.avgRepeatRT > 0 || d.avgSwitchRT > 0);
+    let r = 0;
+    if (validData.length > 1) {
+         const x = validData.map(d => d.prob);
+         const y = validData.map(d => d.switchCost);
+         r = calculateCorrelation(x, y);
+    }
+    
+    let interpretation = '';
+
+    if (resultsData.length === 0) {
+        document.getElementById('brain-interpretation').innerHTML = '';
+        return;
+    }
+    
+    if (r < -0.5) {
+        interpretation = `
+            <div class="card" style="background-color: #111827; border-left-color: #22c55e;">
+                <h3 style="color: #22c55e;">✅ Excelente Adaptação (Padrão Esperado)!</h3>
+                <p style="font-size: 1.1rem; line-height: 1.8;">
+                    Sua <strong>Rede Fronto-Parietal</strong> demonstrou uma forte capacidade de adaptação! 
+                    Sua correlação negativa (r = ${r.toFixed(3)}) indica que seu cérebro se ajustou como esperado: 
+                    <strong>quanto mais frequentes as mudanças, menor foi seu custo de troca</strong>.
+                </p>
+                <p style="margin-top: 15px;">
+                    Seu <strong>IPS</strong> provavelmente codificou bem os padrões estatísticos, 
+                    permitindo que você ficasse "pronto para mudar" e mais rápido quando as mudanças eram comuns!
+                </p>
+            </div>
+        `;
+    } else {
+        interpretation = `
+            <div class="card" style="background-color: #111827; border-left-color: #fbbf24;">
+                <h3 style="color: #fbbf24;">📊 Padrão de Adaptação</h3>
+                <p style="font-size: 1.1rem; line-height: 1.8;">
+                    Sua correlação (r = ${r.toFixed(3)}) mostra seu padrão de adaptação. O padrão científico esperado é uma 
+                    correlação negativa (custo de troca diminui com mais mudanças). Variações são normais e podem ocorrer por:
+                </p>
+                <ul>
+                    <li>Fadiga ou distração ao longo do teste</li>
+                    <li>Ordem aleatória dos blocos</li>
+                    <li>Versão demonstrativa (menos tentativas para estabelecer o padrão)</li>
+                    <li>Variação individual na estratégia</li>
+                </ul>
+                <p style="margin-top: 15px;">
+                    Independentemente do resultado, sua <strong>Rede Fronto-Parietal</strong> trabalhou intensamente para monitorar 
+                    e trocar de tarefas durante todo o teste!
+                </p>
+            </div>
+        `;
+    }
+    
+    document.getElementById('brain-interpretation').innerHTML = interpretation;
+}
+
+// ========================================
+// EVENT LISTENERS
+// ========================================
+
+document.addEventListener('keydown', handleKeyPress);
+
+// ========================================
+// INITIALIZE
+// ========================================
+
+window.onload = function() {
+    navigateTo('section-1'); // Garante que a primeira seção seja mostrada
+    updateTestDurations(); // Calcula as durações do teste
+};
+
+</script>
+
+</body>
+</html>
