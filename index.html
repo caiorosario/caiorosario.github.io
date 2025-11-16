@@ -28,6 +28,8 @@
         .top-nav {
             margin-bottom: 20px;
             text-align: center;
+            position: relative; /* <-- NOVO */
+            z-index: 11;      /* <-- NOVO */
         }
         .top-nav select {
             width: 100%;
@@ -180,6 +182,8 @@
             margin-top: 30px;
             border-top: 1px solid #374151;
             padding-top: 20px;
+            position: relative; /* <-- NOVO */
+            z-index: 11;      /* <-- NOVO */
         }
         .navigation-buttons button {
             margin: 0;
@@ -316,25 +320,24 @@
             text-align: center;
             flex-direction: column;
             margin: 20px 0;
+            position: relative; /* <--- MANTIDO */
+            /* z-index: 11; */      /* <--- REMOVIDO (Este era o erro) */
         }
 
         #stimulus-element {
+            /* REGRAS RESTAURADAS ABAIXO */
             font-size: 150px;
             font-weight: bold;
-            /* margin: 50px 0; */ /* Removido */
-            min-height: 200px; /* Mantido para alinhamento interno */
+            min-height: 200px; /* Altura para alinhar com as cues */
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
-        .cue-magnitude { color: #3b82f6; }
-        .cue-parity { color: #ef4444; }
-        
+
+        /* REGRAS RESTAURADAS ABAIXO */
         #feedback-element {
             font-size: 2.5rem;
             font-weight: bold;
-            /* margin: 30px 0; */ /* Removido */
             min-height: 80px;
             display: flex;
             align-items: center;
@@ -347,24 +350,133 @@
         #fixation-point {
             font-size: 4rem;
             color: #ffffff;
-            /* margin: 50px 0; */ /* Removido */
         }
+        /* FIM DAS REGRAS RESTAURADAS */
 
         #inter-block-prompt {
             text-align: center;
+            /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); */ /* Removido - Adicionando estilos completos abaixo */
+            
+            /* ESTILOS RESTAURADOS PARA O PROMPT ENTRE BLOCOS */
             padding: 50px;
             background-color: #111827;
             border-radius: 12px;
             margin: 40px 0;
+            position: relative; /* Para z-index */
+            z-index: 11; /* Para ficar acima do overlay de toque */
         }
-        #inter-block-prompt h2 {
+
+        /* ESTILOS DO MODAL RESTAURADOS E COMPLETOS */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100; /* Acima de todo o resto */
+        }
+        .modal-content {
+            background-color: #1f2937;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .modal-content h2 {
+            font-size: 1.8rem;
             color: #06b6d4;
+            margin-bottom: 30px;
         }
-        #inter-block-prompt p {
+        .modal-content button {
+            display: block;
+            width: 100%;
+            margin: 15px 0;
             font-size: 1.2rem;
-            margin: 20px 0;
+            padding: 18px 30px;
         }
+        /* FIM DOS ESTILOS DO MODAL */
+
+
+        /* CSS NOVO: Overlay de Toque para Celular */
+        #touch-overlay {
+            position: fixed; /* Cobre a tela inteira */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10;
+            display: flex;
+            pointer-events: none; /* <--- ALTERAÇÃO: Permite cliques 'através' do overlay */
+        }
+        #touch-left, #touch-right {
+            width: 50%;
+            height: 100%;
+            pointer-events: auto; /* <--- ALTERAÇÃO: Captura cliques/toques apenas nestas áreas */
+            /* Descomente para debug */
+            /* background-color: rgba(255, 0, 0, 0.1); 
+            border: 1px solid red; */
+        }
+        /* #touch-right { 
+            background-color: rgba(0, 0, 255, 0.1); 
+            border: 1px solid blue; 
+        } */
         
+        /* NOVO: Cues Visuais da Prática */
+        #practice-cue-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px; /* Largura para posicionar as cues */
+            height: 250px; /* Altura para posic. as cues */
+            pointer-events: none; /* Não bloquear cliques/toques */
+            transition: opacity 0.4s ease;
+            z-index: 1; /* Atrás do estímulo */
+        }
+        .cue-text {
+            position: absolute;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            width: 150px; /* Largura fixa para os textos */
+        }
+        .cue-red { color: #ef4444; }
+        .cue-blue { color: #3b82f6; }
+        
+        /* NOVO: Cores para o estímulo principal (número) */
+        .cue-magnitude { color: #3b82f6; } /* Azul */
+        .cue-parity { color: #ef4444; }  /* Vermelho */
+        
+        /* Posicionamento (relativo ao container) */
+        #cue-parity-left { top: 20%; left: 0; }
+        #cue-parity-right { top: 20%; right: 0; }
+        #cue-magnitude-left { bottom: 20%; left: 0; }
+        #cue-magnitude-right { bottom: 20%; right: 0; }
+        
+        /* Ajuste para mobile */
+        @media (max-width: 768px) {
+            #practice-cue-container {
+                width: 90vw; /* Usar largura da tela */
+                height: 200px; 
+            }
+            .cue-text { 
+                font-size: 0.8rem; 
+                width: 100px;
+            }
+            #cue-parity-left { top: 15%; left: 0; }
+            #cue-parity-right { top: 15%; right: 0; }
+            #cue-magnitude-left { bottom: 15%; left: 0; }
+            #cue-magnitude-right { bottom: 15%; right: 0; }
+        }
+        /* FIM DO CSS NOVO */
+
         /* Charts */
         .chart-container {
             background-color: #1f2937;
@@ -962,13 +1074,26 @@
             <p>O número é <strong>ímpar</strong> ou <strong>par</strong>?</p>
         </div>
         
-        <div class="card" style="background-color: #111827;">
+        <!-- ############# INÍCIO DA CORREÇÃO DE ESTRUTURA ############# -->
+        <!-- Movido da duplicata que estava aqui -->
+        
+        <div class="card" style="background-color: #111827;" id="keyboard-instructions">
             <h3>⌨️ Como Responder:</h3>
             <ul>
                 <li>Tecla <strong>F</strong> (esquerda): Número <strong>menor que 5</strong> OU <strong>ímpar</strong></li>
                 <li>Tecla <strong>J</strong> (direita): Número <strong>maior que 5</strong> OU <strong>par</strong></li>
             </ul>
         </div>
+        
+        <!-- HTML NOVO: Instruções de Toque -->
+        <div class="card hidden" style="background-color: #111827;" id="touch-instructions">
+            <h3>📱 Como Responder (Celular):</h3>
+            <ul>
+                <li>Toque no <strong>LADO ESQUERDO</strong> da tela: Número <strong>menor que 5</strong> OU <strong>ímpar</strong></li>
+                <li>Toque no <strong>LADO DIREITO</strong> da tela: Número <strong>maior que 5</strong> OU <strong>par</strong></li>
+            </ul>
+        </div>
+        <!-- ############# FIM DA CORREÇÃO DE ESTRUTURA ############# -->
         
         <div class="card" style="border-left-color: #fbbf24;">
             <h3>⚡ Importante:</h3>
@@ -994,14 +1119,32 @@
         <div id="block-indicator" style="text-align: center; color: #9ca3af; font-size: 1.1rem; margin-bottom: 20px;"></div>
         <div id="practice-counter" class="hidden" style="text-align: center; font-size: 1.5rem; color: #06b6d4; margin-bottom: 20px; font-weight: bold;"></div>
         
+        <!-- REMOVIDO: Resumo das Instruções da Prática (substituído por cues visuais) -->
+        <!-- <div id="practice-instructions" class="hidden"> ... </div> -->
+
         <!-- Viewport para estabilizar o layout -->
-        <div id="experiment-viewport">
+        <div id="experiment-viewport" style="position: relative;"> <!-- <-- position: relative ADICIONADO -->
+
+            <!-- NOVO: Container para as Cues Visuais da Prática -->
+            <div id="practice-cue-container" class="hidden" style="opacity: 1;">
+                <div class="cue-text cue-red" id="cue-parity-left">Ímpar</div>
+                <div class="cue-text cue-red" id="cue-parity-right">Par</div>
+                <div class="cue-text cue-blue" id="cue-magnitude-left">Menor que 5</div>
+                <div class="cue-text cue-blue" id="cue-magnitude-right">Maior que 5</div>
+            </div>
+
             <div id="fixation-point" class="hidden">+</div>
-            <div id="stimulus-element" class="hidden"></div>
+            <div id="stimulus-element" class="hidden" style="position: relative; z-index: 2;"></div> <!-- z-index adicionado -->
             <div id="feedback-element" class="hidden"></div>
             <div id="timeout-indicator" style="font-size: 1.5rem; color: #ef4444; margin-top: 20px;"></div>
         </div>
         
+        <!-- HTML NOVO: Overlay de Toque -->
+        <div id="touch-overlay" class="hidden">
+            <div id="touch-left"></div>
+            <div id="touch-right"></div>
+        </div>
+
         <div id="inter-block-prompt" class="hidden">
             <h2>Bloco Concluído!</h2>
             <p>Faça uma pequena pausa. Clique abaixo quando estiver pronto para o próximo bloco.</p>
@@ -1157,6 +1300,15 @@
 
 </div>
 
+<!-- HTML NOVO: Modal de Seleção de Dispositivo -->
+<div id="device-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+        <h2>Como você vai responder?</h2>
+        <button onclick="selectDevice('keyboard')">⌨️ Computador (Teclado)</button>
+        <button onclick="selectDevice('touch')">📱 Celular (Toque na Tela)</button>
+    </div>
+</div>
+
 <script>
 // ========================================
 // CONFIGURAÇÃO GLOBAL
@@ -1167,6 +1319,7 @@ let selectedTestVersion = 'quick';
 let TRIALS_PER_BLOCK = 20;
 let USE_POST_ERROR_EXCLUSION = false;
 let USE_RT_TRIMMING = false;
+let inputMode = 'keyboard'; // NOVO: 'keyboard' ou 'touch'
 
 // Quiz tracking
 const quizAnswers = {
@@ -1273,9 +1426,23 @@ function navigateTo(sectionId) {
         clearAllTimers();
         currentTrialState = null; // <--- CORRETO: Limpa o estado ao sair
         currentPhase = 'start';
+        
+        // ATUALIZADO: Limpa as novas cues visuais
+        const cueContainer = document.getElementById('practice-cue-container');
+        if (cueContainer) {
+            cueContainer.classList.add('hidden');
+            cueContainer.style.opacity = 1; // Reseta para a próxima vez
+        }
     }
 
-    document.getElementById(sectionId).classList.remove('hidden');
+    const sectionElement = document.getElementById(sectionId);
+    if (sectionElement) { // Adiciona checagem de segurança
+        sectionElement.classList.remove('hidden');
+    } else {
+        console.error("Seção não encontrada:", sectionId);
+        document.getElementById('section-1').classList.remove('hidden'); // Volta para a seção 1
+    }
+    
     updateProgressById(sectionId);
     
     // Atualiza o dropdown para refletir a seção atual
@@ -1432,8 +1599,30 @@ function selectTestVersion(version) {
     USE_POST_ERROR_EXCLUSION = version === 'scientific';
     USE_RT_TRIMMING = version === 'scientific';
     
+    // MODIFICADO: Em vez de navegar, mostra o modal
+    document.getElementById('device-modal').classList.remove('hidden');
+    // navigateTo('section-6'); // Removido
+}
+
+// NOVO: Seleciona o dispositivo, atualiza instruções e navega
+function selectDevice(mode) {
+    inputMode = mode;
+    document.getElementById('device-modal').classList.add('hidden');
+    updateInstructionsForDevice();
     navigateTo('section-6');
 }
+
+// NOVO: Atualiza o texto das instruções (Seção 6)
+function updateInstructionsForDevice() {
+    if (inputMode === 'touch') {
+        document.getElementById('keyboard-instructions').classList.add('hidden');
+        document.getElementById('touch-instructions').classList.remove('hidden');
+    } else {
+        document.getElementById('keyboard-instructions').classList.remove('hidden');
+        document.getElementById('touch-instructions').classList.add('hidden');
+    }
+}
+
 
 function updateTestDurations() {
     const avgTrialTime = ((ITI_MIN + ITI_MAX) / 2 + RESPONSE_DEADLINE) / 1000; // em segundos
@@ -1450,8 +1639,16 @@ function updateTestDurations() {
     const quickMin = Math.round(quickDuration / 60);
     const sciMin = Math.round(sciDuration / 60);
 
-    document.getElementById('quick-version-duration').textContent = `Duração: ~${quickMin}-${quickMin + 3} minutos`;
-    document.getElementById('scientific-version-duration').textContent = `Duração: ~${sciMin}-${sciMin + 3} minutos`;
+    // Adiciona checagem para ver se os elementos existem antes de setar
+    const quickEl = document.getElementById('quick-version-duration');
+    const sciEl = document.getElementById('scientific-version-duration');
+
+    if (quickEl) {
+        quickEl.textContent = `Duração: ~${quickMin}-${quickMin + 3} minutos`;
+    }
+    if (sciEl) {
+        sciEl.textContent = `Duração: ~${sciMin}-${sciMin + 3} minutos`;
+    }
 }
 
 // ========================================
@@ -1661,6 +1858,7 @@ function clearAllTimers() {
 
 function startExperiment() {
     navigateTo('section-7');
+    setupInputListeners(); // NOVO
     resultsData = [];
     
     const BASE_BLOCK_CONFIGS = [
@@ -1676,6 +1874,18 @@ function startExperiment() {
     startPractice();
 }
 
+// NOVO: Ativa os listeners corretos (teclado ou toque)
+function setupInputListeners() {
+    if (inputMode === 'touch') {
+        document.getElementById('touch-overlay').classList.remove('hidden');
+        // Listeners de toque já são adicionados no DOMContentLoaded
+    } else {
+        document.getElementById('touch-overlay').classList.add('hidden');
+        // Listener de teclado já é adicionado no DOMContentLoaded
+    }
+}
+
+
 function startPractice() {
     currentPhase = 'practice';
     currentTrialIndex = 0;
@@ -1686,6 +1896,14 @@ function startPractice() {
     updatePracticeCounter();
     
     currentTrialState = 'practice'; // <--- CORREÇÃO: Define o estado inicial para o teste começar
+    
+    // ATUALIZADO: Mostra e reseta as cues visuais
+    const cueContainer = document.getElementById('practice-cue-container');
+    cueContainer.classList.remove('hidden');
+    cueContainer.style.opacity = 1;
+    
+    // REMOVIDA: Lógica antiga do 'practice-instructions'
+    
     setTimeout(() => runTrial(), 500);
 }
 
@@ -1723,7 +1941,10 @@ function runTrial() {
     currentTrialState = 'awaiting-response';
     trialStartTime = performance.now();
     
-    responseDeadlineTimer = setTimeout(handleTimeout, RESPONSE_DEADLINE);
+    // MODIFICADO: Só ativa o timer se NÃO estiver na prática
+    if (currentPhase === 'experiment') {
+        responseDeadlineTimer = setTimeout(handleTimeout, RESPONSE_DEADLINE);
+    }
 }
 
 function hideExperimentElements() {
@@ -1737,38 +1958,63 @@ function hideExperimentElements() {
 function handleTimeout() {
     if (currentTrialState !== 'awaiting-response') return;
     
+    // MODIFICADO: Como o timer só roda no 'experiment',
+    // podemos remover o 'if/else' e ir direto para a lógica do experiment.
+    
     document.getElementById('stimulus-element').classList.add('hidden');
     document.getElementById('timeout-indicator').textContent = "Tempo Esgotado!";
     
-    if (currentPhase === 'experiment') {
-        resultsData.push({
-            block: currentBlockIndex,
-            blockName: blockConfigs[currentBlockIndex].name, // Adicionado para análise
-            trial: currentTrialIndex,
-            task: currentTask,
-            trialType: trialSequence[currentTrialIndex].type,
-            stimulus: currentStimulus,
-            response: 'timeout',
-            correct: false,
-            rt: RESPONSE_DEADLINE,
-            postError: lastTrialWasError
-        });
-        lastTrialWasError = true;
-        startITI();
-    } else {
-        consecutiveCorrect = 0;
-        updatePracticeCounter();
-        showPracticeFeedback(false);
-    }
+    resultsData.push({
+        block: currentBlockIndex,
+        blockName: blockConfigs[currentBlockIndex].name, // Adicionado para análise
+        trial: currentTrialIndex,
+        task: currentTask,
+        trialType: trialSequence[currentTrialIndex].type,
+        stimulus: currentStimulus,
+        response: 'timeout',
+        correct: false,
+        rt: RESPONSE_DEADLINE,
+        postError: lastTrialWasError
+    });
+    lastTrialWasError = true;
+    startITI();
 }
 
 function handleKeyPress(e) {
-    if (currentTrialState !== 'awaiting-response') return;
+    // MODIFICADO: Verifica o modo de input
+    if (inputMode !== 'keyboard' || currentTrialState !== 'awaiting-response') return;
     
     const key = e.key.toLowerCase();
     if (key !== KEYS.LEFT && key !== KEYS.RIGHT) return;
     
-    clearTimeout(responseDeadlineTimer);
+    processResponse(key); // NOVO: Chama a função refatorada
+}
+
+// NOVO: Listener de Toque
+function handleTouchStart(e) {
+    e.preventDefault(); // Previne zoom ou scroll
+    
+    // MODIFICADO: Verifica o modo de input
+    if (inputMode !== 'touch' || currentTrialState !== 'awaiting-response') return;
+
+    let key;
+    if (e.currentTarget.id === 'touch-left') {
+        key = KEYS.LEFT;
+    } else {
+        key = KEYS.RIGHT;
+    }
+    
+    processResponse(key); // NOVO: Chama a função refatorada
+}
+
+// NOVO: Função refatorada para processar ambas as entradas (tecla e toque)
+function processResponse(key) {
+    if (currentTrialState !== 'awaiting-response') return; // Checagem dupla
+
+    // MODIFICADO: Só limpa o timer se estiver no 'experiment' (pois na prática ele não é criado)
+    if (currentPhase === 'experiment') {
+        clearTimeout(responseDeadlineTimer);
+    }
     document.getElementById('stimulus-element').classList.add('hidden');
     
     const rt = performance.now() - trialStartTime;
@@ -1800,14 +2046,37 @@ function handleKeyPress(e) {
     }
 }
 
+
 function showPracticeFeedback(correct) {
     currentTrialState = 'showing-feedback';
     hideExperimentElements();
     document.getElementById('practice-counter').classList.remove('hidden');
     
     const feedbackElement = document.getElementById('feedback-element');
-    feedbackElement.textContent = correct ? "Correto ✓" : "Incorreto ✗";
-    feedbackElement.className = correct ? "feedback-correct" : "feedback-incorrect";
+    
+    // NOVO: Pega o container das cues visuais
+    const cueContainer = document.getElementById('practice-cue-container');
+
+    if (correct) {
+        feedbackElement.textContent = "Correto ✓";
+        feedbackElement.className = "feedback-correct";
+
+        // NOVO: Lógica da Opacidade
+        let newOpacity = 1;
+        if (consecutiveCorrect === 1) newOpacity = 0.75;
+        else if (consecutiveCorrect === 2) newOpacity = 0.5;
+        else if (consecutiveCorrect === 3) newOpacity = 0.25;
+        else if (consecutiveCorrect >= 4) newOpacity = 0;
+        
+        cueContainer.style.opacity = newOpacity;
+
+    } else {
+        feedbackElement.textContent = "Incorreto ✗";
+        feedbackElement.className = "feedback-incorrect";
+        
+        // NOVO: Reset da Opacidade
+        cueContainer.style.opacity = 1;
+    }
     feedbackElement.classList.remove('hidden');
     
     feedbackTimer = setTimeout(() => {
@@ -1822,6 +2091,10 @@ function showPracticeFeedback(correct) {
 
 function showPracticeSuccess() {
     hideExperimentElements();
+    
+    // ATUALIZADO: Esconde as cues visuais
+    document.getElementById('practice-cue-container').classList.add('hidden');
+
     const feedbackElement = document.getElementById('feedback-element');
     feedbackElement.textContent = "Ótimo! Preparando o primeiro bloco...";
     feedbackElement.className = "feedback-correct";
@@ -2287,7 +2560,7 @@ function createStatisticalAnalysis(data) {
     document.getElementById('statistical-analysis').innerHTML = statsHTML;
 }
 
-// FUNÇÃO EXISTENTE (SEM MODIFICAÇÕES)
+// FUNÇÃO EXISTENTE (SEM MODIFIFICAÇÕES)
 function createBrainInterpretation(data) {
     
     const validData = data.filter(d => d.avgRepeatRT > 0 || d.avgSwitchRT > 0);
@@ -2355,10 +2628,29 @@ document.addEventListener('keydown', handleKeyPress);
 // INITIALIZE
 // ========================================
 
-window.onload = function() {
+// ############# CORREÇÃO DE E inicialização #############
+// Troca 'window.onload' por 'DOMContentLoaded' para garantir que o DOM está pronto
+document.addEventListener('DOMContentLoaded', function() {
     navigateTo('section-1'); // Garante que a primeira seção seja mostrada
     updateTestDurations(); // Calcula as durações do teste
-};
+
+    // NOVO: Adiciona listeners de toque
+    // Usamos 'touchstart' para a resposta mais rápida, 'mousedown' como fallback
+    const touchLeft = document.getElementById('touch-left');
+    const touchRight = document.getElementById('touch-right');
+    
+    if(touchLeft && touchRight) { // Adiciona checagem de segurança
+        touchLeft.addEventListener('touchstart', handleTouchStart, { passive: false });
+        touchRight.addEventListener('touchstart', handleTouchStart, { passive: false });
+        
+        // Fallback para cliques de mouse em desktop se o modo 'touch' for forçado
+        touchLeft.addEventListener('mousedown', handleTouchStart, { passive: false });
+        touchRight.addEventListener('mousedown', handleTouchStart, { passive: false });
+    } else {
+        console.error("Elementos de toque (touch-left, touch-right) não encontrados no DOM.");
+    }
+});
+// ############# FIM DA CORREÇÃO #############
 
 </script>
 
