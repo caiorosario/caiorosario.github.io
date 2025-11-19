@@ -6,6 +6,23 @@
     <title>Funções Executivas - Curso Completo</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
+	/* Estilo para imagens ilustrativas dentro das seções */
+	.concept-image {
+    		width: 100%;
+   		max-width: 600px; /* Tamanho máximo para não ficar gigante */
+    		height: auto;
+    		display: block;
+   		 margin: 25px auto; /* Centraliza horizontalmente */
+    		border-radius: 12px;
+    		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Sombra para destaque */
+    		border: 1px solid #374151; /* Borda sutil */
+    		transition: transform 0.3s;
+	}
+
+	.concept-image:hover {
+    		transform: scale(1.02); /* Leve zoom ao passar o mouse */
+    		border-color: #06b6d4;
+	}
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: Arial, sans-serif;
@@ -638,15 +655,18 @@
     </div>
 
     <!-- SEÇÃO 1 -->
-    <div id="section-1" class="section">
+<div id="section-1" class="section">
         <h1>🧠 O que são Funções Executivas?</h1>
         <p style="text-align: center; color: #9ca3af; font-size: 1.2rem; margin-bottom: 30px;">O "Coringa" do Cérebro</p>
         
+        <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80&w=800&auto=format&fit=crop" 
+             alt="Ilustração de uma rede neural representando o cérebro" 
+             class="concept-image">
+
         <p>As <strong>Funções Executivas (FEs)</strong> não são uma habilidade cognitiva única, mas sim um conjunto de processos mentais de alto nível que atuam como o <strong>"gerente" ou "CEO" do cérebro</strong>. Elas são responsáveis por gerenciar e regular outras habilidades mais básicas, como a memória, a percepção e a linguagem.</p>
         
         <h2>🃏 A Alegoria dos "4 Ases e 1 Coringa"</h2>
-        
-        <div class="card">
+		<div class="card">
             <div class="card-icon">🂡 🂱 🃁 🃑</div>
             <h3>Os "4 Ases" (Cognição Categórica)</h3>
             <p>São nossas habilidades cognitivas fundamentais:</p>
@@ -656,6 +676,10 @@
                 <li><strong>Memória:</strong> Como armazenamos informações</li>
                 <li><strong>Práxis:</strong> Como executamos ações motoras</li>
             </ul>
+		<img src="figura1.webp" 
+             	alt="Cartas de baralho sobre uma mesa escura" 
+             	class="concept-image"
+             	style="max-width: 500px;"> 
         </div>
         
         <div class="card" style="border-left-color: #fbbf24;">
@@ -674,7 +698,6 @@
             <button onclick="navigateTo('quiz-1')">Fazer Quiz da Seção 1 →</button>
         </div>
     </div>
-
     <!-- QUIZ 1 -->
     <div id="quiz-1" class="section hidden">
         <h1>📝 Quiz: Seção 1</h1>
